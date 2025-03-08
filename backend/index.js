@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const Product = require('./models/product.model.js');
+const userRoutes = require('./routes/user.routes');
+const recipeRoutes = require('./routes/recipe.routes');
 
 const app = express();
 
 app.use(express.json());
+
+// Add routes
+app.use('/api', userRoutes);
+app.use('/api', recipeRoutes);
 
 app.get('/', (req, res) => {
     res.send("Hello from Node API Updated 2");

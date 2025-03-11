@@ -6,11 +6,34 @@ const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 const getRecipes = async (req, res) => {
     try {
+        // Extract pagination parameters from query string
+        const page = parseInt(req.query.page) || 1; // Default to first page
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
+        const skip = (page - 1) * limit;
+
+        // Get total count for pagination info
+        const total = await Recipe.countDocuments({});
+
+        // Get paginated recipes
         const recipes = await Recipe.find({})
+            .sort({ dateModified: -1 }) // Sort by newest first
+            .skip(skip)
+            .limit(limit)
             .populate('author', 'username')
             .populate('comments.user', 'username')
             .populate('likes', 'username');
-        res.status(200).json(recipes);
+
+        // Send pagination metadata along with recipes
+        res.status(200).json({
+            recipes,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(total / limit),
+                totalRecipes: total,
+                hasNextPage: skip + limit < total,
+                hasPrevPage: page > 1
+            }
+        });
     } catch (error) {
         res.status(500).json({message: error.message});
     }

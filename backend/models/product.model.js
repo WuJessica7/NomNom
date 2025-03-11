@@ -1,3 +1,5 @@
+// This is an example of a model file for a product API. Not intended to be used in the final project.
+
 const mongoose = require('mongoose');
 
 const ProductSchema = new mongoose.Schema(

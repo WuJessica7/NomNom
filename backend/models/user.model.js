@@ -80,9 +80,6 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
-// Create indexes for better query performance
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User; 

@@ -1,16 +1,38 @@
 import "./NavigationBars.css";
+import { Link } from 'react-router-dom';
 
 function NavigationBar({ screen_name }) {
     return(
         <div className="navigationBar"> 
-            <img className="appIcon" alt="" src="App_Icon.png" />
-            <div className="appName">Nom Nom</div>
+
             <div className="screenName">{screen_name}</div>
-            <img className="userIcon" alt="" src="User_Icon.svg" />
-            <img className="bellIcon" alt="" src="Bell_Icon.svg" />
-            <img className="saltIcon" alt="" src="Salt_Icon.svg" />
-            <img className="bookIcon" alt="" src="Book_Icon.svg" />
-            <img className="heartIcon" alt="" src="Heart_Icon.svg" />
+
+            <Link to="/">
+                <img className="appIcon" alt="" src="App_Icon.png" />
+                <div className="appName">Nom Nom</div>
+            </Link>
+            
+            <Link to="/favorites">
+                <img className="heartIcon" alt="" src="Heart_Icon.svg" />
+            </Link>
+
+            <Link to="/recipes">
+                <img className="bookIcon" alt="" src="Book_Icon.svg" />
+            </Link>
+
+            <Link to="/ingredients">
+                <img className="saltIcon" alt="" src="Salt_Icon.svg" />
+            </Link>
+
+            <Link to="/activity">
+                <img className="bellIcon" alt="" src="Bell_Icon.svg" />
+            </Link>
+
+            <Link to="/profile">
+                <img className="userIcon" alt="" src="User_Icon.svg" />
+            </Link>
+
+
         </div>
     );
 }
@@ -19,10 +41,14 @@ function NavigationBar({ screen_name }) {
 function MainPageNavigationBar() {
     return(
         <div className="navigationBar">
-            <img className="appIcon" alt="" src="App_Icon.png" />
-            <div className="appName">Nom Nom</div>
-            <text className="signIn">Sign In</text>
+            <Link to="/">
+                <img className="appIcon" alt="" src="App_Icon.png" />
+                <div className="appName">Nom Nom</div>
+            </Link>
 
+            <Link to="/sign-in">
+                <text className="signIn">Sign In</text>
+            </Link>
         </div>
     );
 }
@@ -31,9 +57,14 @@ function MainPageNavigationBar() {
 function OtherNavigationBar() {
     return(
         <div className="navigationBar">
-            <img className="appIcon" alt="" src="App_Icon.png" />
-            <div className="appName">Nom Nom</div>
-            <text className="back">Back</text>
+            <Link to="/">
+                <img className="appIcon" alt="" src="App_Icon.png" />
+                <div className="appName">Nom Nom</div>
+            </Link>
+
+            <Link to="/ingredients">
+                <text className="back">Back</text>
+            </Link>
         </div>
     );
 }

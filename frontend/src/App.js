@@ -1,11 +1,34 @@
 import { NavigationBar, MainPageNavigationBar, OtherNavigationBar } from "./NavigationBars"
+import HomePage from "./HomePage";
+import SignInPage from "./SignInPage"
+import CreateAccountPage from "./CreateAccountPage"
+import { BrowserRouter as Router, Routes, Route, Switch, Link } from "react-router-dom";
 
 
 function App() {
   return(
     //<OtherNavigationBar />
-    <MainPageNavigationBar />
+    //<MainPageNavigationBar />
     //<NavigationBar screen_name="Favorites" />
+    //<SignInPage />
+    //<CreateAccountPage />
+
+    <Router>
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/create-account" element={<CreateAccountPage />} />
+        <Route path="/favorites" element={<NavigationBar screen_name="Favorites" />} />
+        <Route path="/recipes" element={<NavigationBar screen_name="Recipes" />} />
+        <Route path="/ingredients" element={<NavigationBar screen_name="Ingredients" />} />
+        <Route path="/activity" element={<NavigationBar screen_name="Activity" />} />
+        <Route path="/profile" element={<OtherNavigationBar />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} />
+      </Routes>
+
+    </Router>
+
   );
 
 }

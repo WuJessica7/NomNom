@@ -63,7 +63,11 @@ const userSchema = new mongoose.Schema({
         ref: 'Recipe'
     }],
 
-    personalIngredients: [personalIngredientSchema],
+    personalIngredients: {
+        type: [personalIngredientSchema],
+        default: []
+    },
+
     joinedDate: {
         type: Date,
         default: Date.now

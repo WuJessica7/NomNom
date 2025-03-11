@@ -1,14 +1,13 @@
-/* Favorites.module.scss */
 .favorites {
   display: flex;
   flex-direction: column;
-  align-items: center; /* 전체를 가운데 정렬 */
+  align-items: center; 
   margin: 0 auto;
   padding: 40px;
   width: 100%;
-  max-width: 1200px; /* 페이지 최대 너비 */
+  max-width: 1200px;
   box-sizing: border-box;
-  background-color: #f8f9fa; /* 배경색 (원하는 색상으로 변경 가능) */
+  background-color: #f8f9fa;
 
   h1 {
     font-size: 2.5rem;
@@ -20,8 +19,8 @@
   &__grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* 카드들을 가로 방향 중앙 정렬 */
-    gap: 20px;               /* 카드 사이 간격 */
+    justify-content: center; 
+    gap: 20px;     
     width: 100%;
     padding: 20px;
   }

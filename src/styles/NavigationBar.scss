@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap');
-body {
-    margin: 0; line-height: normal;
-}
-
 .navigationBar {
     width: 100%;
+    left: 321px;
+    top: 25px;
     position: relative;
     height: 40px;
     text-align: center;
@@ -25,7 +22,7 @@ body {
 .appName {
     position: absolute;
     top: 7px;
-    left: 50.83px;
+    left: 51px;
     font-size: 24px;
     text-transform: uppercase;
     display: inline-block;
@@ -86,5 +83,31 @@ body {
     left: 1025px;
     width: 40px;
     height: 40px;
+    cursor: pointer;
+}
+
+.signIn {
+    position: absolute;
+    top: 7px;
+    left: 976px;
+    text-transform: uppercase;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.back {
+    width: 55px;
+    position: absolute;
+    top: 8px;
+    left: 1010px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
     cursor: pointer;
 }

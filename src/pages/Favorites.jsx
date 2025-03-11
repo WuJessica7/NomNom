@@ -3,7 +3,6 @@ import SearchBar from "../components/SearchBar";
 import Favorite from "../components/Favorite";
 import styles from "../styles/Favorites.module.scss";
 
-// 초기 즐겨찾기 데이터
 const initialFavoriteItems = [
     { id: 1, chef: "Chef A", food: "Food A", image: "/79277308_l.png" },
     { id: 2, chef: "Chef B", food: "Food B", image: "/79277308_l.png" },

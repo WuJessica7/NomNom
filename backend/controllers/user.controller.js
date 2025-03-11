@@ -66,6 +66,11 @@ const updateUser = async (req, res) => {
             return res.status(400).json({message: "Invalid user ID format"});
         }
 
+        // Check if user is modifying their own profile
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to update this profile"});
+        }
+
         const user = await User.findById(id);
         if (!user) {
             return res.status(404).json({message: "User not found"});
@@ -101,6 +106,11 @@ const deleteUser = async (req, res) => {
             return res.status(400).json({message: "Invalid user ID format"});
         }
 
+        // Check if user is deleting their own account
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to delete this account"});
+        }
+
         const user = await User.findById(id);
         if (!user) {
             return res.status(404).json({message: "User not found"});
@@ -120,6 +130,11 @@ const addPersonalIngredient = async (req, res) => {
         
         if (!isValidObjectId(id)) {
             return res.status(400).json({message: "Invalid user ID format"});
+        }
+
+        // Check if user is modifying their own ingredients
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to modify these ingredients"});
         }
 
         const user = await User.findById(id);

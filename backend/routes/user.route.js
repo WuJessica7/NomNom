@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const { authentication } = require('../middleware/auth.middleware.js');
 const {
     getUsers,
     getUser,
@@ -13,17 +13,18 @@ const {
     getPersonalIngredients
 } = require('../controllers/user.controller.js');
 
-// Basic CRUD routes
-router.get('/', getUsers);
-router.get('/:id', getUser);
-router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+// Public routes
+router.get('/', getUsers);         // List users can be public
+router.get('/:id', getUser);       // Viewing a profile can be public
 
-// Personal ingredients routes
-router.get('/:id/ingredients', getPersonalIngredients);
-router.post('/:id/ingredients', addPersonalIngredient);
-router.put('/:id/ingredients/:ingredientId', updatePersonalIngredient);
-router.delete('/:id/ingredients/:ingredientId', deletePersonalIngredient);
+// Protected routes - require authentication
+router.put('/:id', authentication, updateUser);           // Only authenticated user can update their profile
+router.delete('/:id', authentication, deleteUser);        // Only authenticated user can delete their account
+
+// Personal ingredients - all protected
+router.get('/:id/ingredients', authentication, getPersonalIngredients);
+router.post('/:id/ingredients', authentication, addPersonalIngredient);
+router.put('/:id/ingredients/:ingredientId', authentication, updatePersonalIngredient);
+router.delete('/:id/ingredients/:ingredientId', authentication, deletePersonalIngredient);
 
 module.exports = router; 

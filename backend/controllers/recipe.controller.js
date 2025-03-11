@@ -70,14 +70,14 @@ const createRecipe = async (req, res) => {
 
 const updateRecipe = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
 
         if (!isValidObjectId(id)) {
             return res.status(400).json({message: "Invalid recipe ID format"});
         }
 
         const recipe = await Recipe.findById(id);
-
+        
         if (!recipe) {
             return res.status(404).json({message: "Recipe not found"});
         }
@@ -88,7 +88,7 @@ const updateRecipe = async (req, res) => {
         }
 
         const updatedRecipe = await Recipe.findByIdAndUpdate(
-            id, 
+            id,
             {
                 ...req.body,
                 dateModified: new Date()
@@ -107,14 +107,14 @@ const updateRecipe = async (req, res) => {
 
 const deleteRecipe = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
 
         if (!isValidObjectId(id)) {
             return res.status(400).json({message: "Invalid recipe ID format"});
         }
 
         const recipe = await Recipe.findById(id);
-
+        
         if (!recipe) {
             return res.status(404).json({message: "Recipe not found"});
         }

@@ -10,6 +10,7 @@ const Recipe = require('./models/recipe.model.js');
 const productRoute = require("./routes/product.route.js");
 const userRoutes = require('./routes/user.route.js');
 const recipeRoutes = require('./routes/recipe.route.js');
+const authRoutes = require('./routes/auth.route.js');
 
 const app = express();
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(express.json());
 
 // Add routes
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use("/api/products", productRoute);
 app.use("/api/recipes", recipeRoutes);

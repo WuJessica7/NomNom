@@ -1,8 +1,11 @@
-import NavigationBar from "./NavigationBar"
+import { NavigationBar, MainPageNavigationBar, OtherNavigationBar } from "./NavigationBars"
+
 
 function App() {
   return(
-    <NavigationBar screen_name="Favorites" />
+    //<OtherNavigationBar />
+    <MainPageNavigationBar />
+    //<NavigationBar screen_name="Favorites" />
   );
 
 }

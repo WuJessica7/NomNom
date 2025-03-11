@@ -5,7 +5,7 @@ require('dotenv').config();
 const Product = require('./models/product.model.js');
 const User = require('./models/user.model.js');
 const productRoute = require("./routes/product.route.js");
-//const userRoutes = require('./routes/user.routes');
+const userRoutes = require('./routes/user.route.js');
 const recipeRoutes = require('./routes/recipe.route.js');
 
 const app = express();
@@ -13,10 +13,8 @@ const app = express();
 // Middleware Configuration
 app.use(express.json());
 
-// Add routes, later
-//app.use('/api', userRoutes);
-
-// Add URL routing... these are routes.
+// Add routes
+app.use('/api/users', userRoutes);
 app.use("/api/products", productRoute);
 app.use("/api/recipes", recipeRoutes);
 

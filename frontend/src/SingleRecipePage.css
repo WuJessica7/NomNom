@@ -1,0 +1,249 @@
+.single-recipe {
+    width: 100%;
+    position: relative;
+    background-color: #f9f5f6;
+    height: 1700px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 20px;
+    color: #000;
+    font-family: Outfit;
+}
+
+.recipe-name {
+    position: absolute;
+    top: 130px;
+    left: 708px;
+    font-size: 45px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.ingredients {
+    position: absolute;
+    top: 300px;
+    left: 321px;
+    width: 273px;
+    height: 460px;
+}
+
+.ingredients-header {
+    width: 273px;
+    position: relative;
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+}
+
+.rectangle2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #cecdcd;
+    width: 25px;
+    height: 25px;
+}
+
+.ingredient-text {
+    position: absolute;
+    top: 0px;
+    left: 50px;
+    text-transform: uppercase;
+    font-size: 20px;
+    width: 450px;
+    text-align: left;
+}
+
+.ingredient-1 {
+    position: absolute;
+    top: 75px;
+    left: 22px;
+    width: 179px;
+    height: 25px;
+}
+
+.ingredient-2 {
+    position: absolute;
+    top: 115px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-3 {
+    position: absolute;
+    top: 155px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-4 {
+    position: absolute;
+    top: 195px;
+    left: 22px;
+    width: 184px;
+    height: 25px;
+}
+
+.ingredient-5 {
+    position: absolute;
+    top: 235px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-6 {
+    position: absolute;
+    top: 275px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-7 {
+    position: absolute;
+    top: 315px;
+    left: 22px;
+    width: 182px;
+    height: 25px;
+}
+
+.ingredient-8 {
+    position: absolute;
+    top: 355px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-9 {
+    position: absolute;
+    top: 395px;
+    left: 22px;
+    width: 183px;
+    height: 25px;
+}
+
+.ingredient-10 {
+    position: absolute;
+    top: 435px;
+    left: 22px;
+    width: 192px;
+    height: 25px;
+}
+
+.instructions {
+    position: absolute;
+    top: 900px;
+    left: 321px;
+    width: 298px;
+    height: 457px;
+    text-align: left;
+}
+
+.instructions-header {
+    width: 298px;
+    position: relative;
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+}
+
+.instruction-text {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    padding-left: 27px;
+    width: 1000px;
+}
+
+.instruction-1 {
+    position: absolute;
+    top: 72px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-2 {
+    position: absolute;
+    top: 112px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-3 {
+    position: absolute;
+    top: 152px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-4 {
+    position: absolute;
+    top: 192px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-5 {
+    position: absolute;
+    top: 232px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-6 {
+    position: absolute;
+    top: 272px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-7 {
+    position: absolute;
+    top: 312px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-8 {
+    position: absolute;
+    top: 352px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-9 {
+    position: absolute;
+    top: 392px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+.instruction-10 {
+    position: absolute;
+    top: 432px;
+    left: 22px;
+    text-transform: uppercase;
+}
+
+
+.food-image {
+    position: absolute;
+    top: 351px;
+    left: 861px;
+    border-radius: 16.92px;
+    width: 525px;
+    height: 378px;
+    object-fit: cover;
+}

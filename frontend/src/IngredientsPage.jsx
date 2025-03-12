@@ -2,41 +2,58 @@ import "./IngredientsPage.css";
 import { NavigationBar } from "./NavigationBars";
 import { useState } from "react";
 
-function IngredientBox({ top_dist }) {
+function IngredientBox({ ingredient, index, removeIngredient }) {
   return (
-    <>
-      <div className="ingredient-group" style={{ top: top_dist }}>
-        <div className="ingredient-rectangle" />
-        <div className="ingredient-name">Ingredient Name</div>
-        <div className="quantity">Quantity</div>
-        <div className="expiration-date">Expiration Date</div>
-        <div className="x">X</div>
-      </div>
-    </>
+    <div className="ingredient-group" style={{ top: index * 100 }}>
+      <div className="ingredient-rectangle" />
+      <div className="ingredient-name">{ingredient.name}</div>
+      <div className="quantity">{ingredient.quantity}</div>
+      <div className="expiration-date">{ingredient.expirationDate}</div>
+      <div className="x" onClick={() => removeIngredient(index)}>X</div>
+    </div>
   );
 }
 
 function IngredientPage() {
+  const [ingredients, setIngredients] = useState([]);
   const [ingredientName, setIngredientName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
+
+  const addIngredient = () => {
+    if (!ingredientName || !quantity || !expirationDate) return;
+
+    setIngredients([
+      ...ingredients,
+      { name: ingredientName, quantity, expirationDate },
+    ]);
+
+    // Clear input fields
+    setIngredientName("");
+    setQuantity("");
+    setExpirationDate("");
+  };
+
+  const removeIngredient = (index) => {
+    setIngredients(ingredients.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="ingredients-page">
       <NavigationBar screen_name="Ingredients" />
       <div className="ingredients-list">
-        <IngredientBox top_dist={0} />
-        <IngredientBox top_dist={100} />
-        <IngredientBox top_dist={200} />
-        <IngredientBox top_dist={300} />
-        <IngredientBox top_dist={400} />
-        <IngredientBox top_dist={500} />
-        <IngredientBox top_dist={600} />
-        <IngredientBox top_dist={700} />
+        {ingredients.map((ingredient, index) => (
+          <IngredientBox
+            key={index}
+            ingredient={ingredient}
+            index={index}
+            removeIngredient={removeIngredient}
+          />
+        ))}
       </div>
 
       <div className="new-ingredient">
-        <div className="add-button">
+        <div className="add-button" onClick={addIngredient}>
           <div className="add-ingredient">Add Ingredient</div>
         </div>
         <div className="input-field" style={{ top: 0 }}>

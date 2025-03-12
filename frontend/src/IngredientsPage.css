@@ -129,3 +129,11 @@
     cursor: pointer;
     color: #fff;
 }
+
+.x {
+    position: absolute;
+    top: 2px;
+    left: 685px;
+    line-height: 140%;
+    cursor: pointer;
+}

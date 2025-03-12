@@ -4,6 +4,7 @@ import SignInPage from "./SignInPage"
 import CreateAccountPage from "./CreateAccountPage"
 import SingleRecipePage from "./SingleRecipePage";
 import { BrowserRouter as Router, Routes, Route, Switch, Link } from "react-router-dom";
+import IngredientPage from "./IngredientsPage";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/favorites" element={<NavigationBar screen_name="Favorites" />} />
         <Route path="/recipes" element={<NavigationBar screen_name="Recipes" />} />
-        <Route path="/ingredients" element={<NavigationBar screen_name="Ingredients" />} />
+        <Route path="/ingredients" element={<IngredientPage />} />
         <Route path="/activity" element={<NavigationBar screen_name="Activity" />} />
         <Route path="/profile" element={<OtherNavigationBar />} />
         <Route path="/recipe" element={<SingleRecipePage />} />

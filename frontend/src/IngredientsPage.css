@@ -1,0 +1,122 @@
+.ingredients-page {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 1024px;
+    text-align: left;
+    font-size: 20px;
+    color: #000;
+    font-family: Outfit;
+}
+
+.ingredients-list {
+    position: absolute;
+    top: 163px;
+    left: 322px;
+    width: 705px;
+    height: 788px;
+    font-size: 20px;
+    color: #000;
+    font-family: Outfit;
+}
+
+.ingredient-group {
+    position: absolute;
+    left: 0px;
+    width: 705px;
+    height: 81px;
+}
+
+.ingredient-rectangle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+    width: 705px;
+    height: 81px;
+}
+
+.ingredient-name {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    line-height: 140%;
+    font-weight: 500;
+}
+
+.quantity {
+    position: absolute;
+    top: 44px;
+    left: 15px;
+    line-height: 140%;
+    font-weight: 500;
+}
+
+.expiration-date {
+    position: absolute;
+    top: 12px;
+    left: 489px;
+    line-height: 140%;
+    font-weight: 500;
+}
+
+.new-ingredient {
+    position: absolute;
+    top: 163px;
+    left: 1132px;
+    width: 255px;
+    height: 190px;
+    color: #828282;
+    font-family: Inter;
+}
+
+.input-field {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    width: 255px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px 16px;
+}
+
+.new-ingredient-text {
+    flex: 1;
+    position: relative;
+    line-height: 140%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.add-ingredient {
+    position: relative;
+    line-height: 140%;
+    font-weight: 500;
+}
+
+.add-button {
+    position: absolute;
+    top: 150px;
+    left: 27px;
+    border-radius: 8px;
+    background-color: #000;
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: #fff;
+}

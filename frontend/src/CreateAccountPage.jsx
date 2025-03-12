@@ -20,7 +20,6 @@ function CreateAccountPage() {
               type="email"
               id="email"
               name="email"
-              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -32,7 +31,6 @@ function CreateAccountPage() {
               type="password"
               id="password"
               name="password"
-              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

@@ -24,8 +24,6 @@ const Activity = () => {
   return (
     <div className={styles.activity}>
 
-      <SearchBar search={search} setSearch={setSearch} />
-
       <div className={styles.gridContainer}>
         {filteredItems.map((item) => (
           <div key={item.id} className={styles.card}>

@@ -47,6 +47,7 @@
     left: 825px;
     width: 40px;
     height: 40px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -56,6 +57,7 @@
     left: 875px;
     width: 40px;
     height: 40px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -65,6 +67,7 @@
     left: 925px;
     width: 40px;
     height: 40px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -74,6 +77,7 @@
     left: 975px;
     width: 40px;
     height: 40px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -83,6 +87,7 @@
     left: 1025px;
     width: 40px;
     height: 40px;
+    border-radius: 10px;
     cursor: pointer;
 }
 

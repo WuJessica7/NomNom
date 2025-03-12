@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Activity.module.scss";
 import SearchBar from "./SearchBar";
+import { NavigationBar } from "./NavigationBars";
 
 const activities = [
   { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image.png", date: "03/10/2025" },
@@ -23,7 +24,7 @@ const Activity = () => {
 
   return (
     <div className={styles.activity}>
-      <h1 className={styles.title}>ACTIVITY</h1>
+      <NavigationBar screen_name="Activity" />
 
       <SearchBar search={search} setSearch={setSearch} />
 

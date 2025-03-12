@@ -2,6 +2,7 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.scss";
+import { OtherNavigationBar } from "./NavigationBars";
 
 const Profile = ({
   email,
@@ -30,6 +31,7 @@ const Profile = ({
   return (
     <div className={styles["profile-container"]}>
       <div className={styles.profile}>
+        <OtherNavigationBar />
         <h1 className={styles.profile__title}>Profile</h1>
 
         <input

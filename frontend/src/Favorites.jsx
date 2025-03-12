@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import Favorite from "./Favorite";
 import styles from "./Favorites.module.scss";
+import { NavigationBar } from "./NavigationBars";
 
 const initialFavoriteItems = [
     { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image.png" },
@@ -28,7 +29,7 @@ const Favorites = () => {
 
     return (
         <div className={styles.favorites}>
-            <h1 className={styles.title}>Favorites</h1>
+            <NavigationBar screen_name="Favorites" />
             <SearchBar search={search} setSearch={setSearch} />
             <div className={styles.favorites__grid}>
                 {filteredItems.map((item) => (

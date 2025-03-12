@@ -13,13 +13,7 @@ import Profile from "./Profile";
 
 
 function App() {
-  return(
-    //<OtherNavigationBar />
-    //<MainPageNavigationBar />
-    //<NavigationBar screen_name="Favorites" />
-    //<SignInPage />
-    //<CreateAccountPage />
-    
+  return(    
     <Router>
 
       <Routes>
@@ -27,11 +21,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
-        <Route path="/favorites" element={<NavigationBar screen_name="Favorites" />} />
-        <Route path="/recipes" element={<NavigationBar screen_name="Recipes" />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/recipes" element={<Recipes />} />
         <Route path="/ingredients" element={<IngredientPage />} />
-        <Route path="/activity" element={<NavigationBar screen_name="Activity" />} />
-        <Route path="/profile" element={<OtherNavigationBar />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/recipe" element={<SingleRecipePage />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>

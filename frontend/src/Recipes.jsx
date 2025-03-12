@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import RecipeCard from "./Recipe";
 import styles from "./Recipes.module.scss";
+import { NavigationBar } from "./NavigationBars";
 
 const recipeItems = [
     { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image.png" },
@@ -23,7 +24,7 @@ const Recipes = () => {
 
   return (
     <div className={styles.recipes}>
-      <h1>Recipes</h1>
+      <NavigationBar screen_name="Recipes" />
       <SearchBar search={search} setSearch={setSearch} />
       <div className={styles.recipes__grid}>
         {filteredItems.map((item) => (

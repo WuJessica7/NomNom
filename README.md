@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 # NomNom
 
 ## App Icon
-insert app icon here
+![](./frontend/public/App_Icon.png)
 
 
 ## Description

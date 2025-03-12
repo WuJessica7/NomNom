@@ -15,6 +15,8 @@ const EditRecipe = () => {
   const [ingredients, setIngredients] = useState([{ ingredient: '', measure: '' }]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -91,6 +93,18 @@ const EditRecipe = () => {
     setIngredients(newIngredients);
   };
 
+  const handleImageFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+      // Clear the URL input since we're using a file
+      setRecipe(prev => ({ ...prev, strMealThumb: '' }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -122,6 +136,24 @@ const EditRecipe = () => {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to update recipe');
+      }
+
+      // If we have an image file, upload it
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        const imageResponse = await fetch(`http://localhost:5000/api/recipes/${id}/image`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: formData
+        });
+
+        if (!imageResponse.ok) {
+          console.error('Failed to upload image, but recipe was updated');
+        }
       }
 
       navigate('/recipes');
@@ -164,15 +196,49 @@ const EditRecipe = () => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="strMealThumb">Image URL:</label>
-            <input
-              type="url"
-              id="strMealThumb"
-              name="strMealThumb"
-              value={recipe.strMealThumb}
-              onChange={handleRecipeChange}
-              required
-            />
+            <label>Recipe Image:</label>
+            <div className={styles.imageInputs}>
+              <div className={styles.urlInput}>
+                <label htmlFor="strMealThumb">Image URL:</label>
+                <input
+                  type="url"
+                  id="strMealThumb"
+                  name="strMealThumb"
+                  value={recipe.strMealThumb}
+                  onChange={handleRecipeChange}
+                  placeholder="Enter image URL"
+                  disabled={imageFile !== null}
+                />
+              </div>
+              <div className={styles.orDivider}>OR</div>
+              <div className={styles.fileInput}>
+                <label htmlFor="imageFile">Upload Image:</label>
+                <input
+                  type="file"
+                  id="imageFile"
+                  accept="image/*"
+                  onChange={handleImageFileChange}
+                  disabled={recipe.strMealThumb !== ''}
+                />
+              </div>
+            </div>
+            {(imagePreview || recipe.strMealThumb) && (
+              <div className={styles.imagePreview}>
+                <img src={imagePreview || recipe.strMealThumb} alt="Preview" />
+                {imagePreview && (
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      setImageFile(null);
+                      setImagePreview(null);
+                    }}
+                    className={styles.removePreview}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           <div className={styles.field}>

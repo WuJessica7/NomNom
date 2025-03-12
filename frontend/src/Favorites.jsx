@@ -10,6 +10,13 @@ const Favorites = () => {
     const [error, setError] = useState(null);
     const { user } = useAuth();
 
+    // Set loading to false once user data is available
+    useEffect(() => {
+        if (user !== null) {
+            setLoading(false);
+        }
+    }, [user]);
+
     // Filter favorites based on search
     const filteredFavorites = user?.favoriteRecipes?.filter(
         (recipe) =>

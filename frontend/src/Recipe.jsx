@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './context/AuthContext';
 import styles from "./Recipe.module.scss";
@@ -9,6 +9,7 @@ const Recipe = ({ item, onDelete }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const cardRef = useRef(null);
 
   // Check if recipe is in user's favorites on component mount
   useEffect(() => {
@@ -41,7 +42,13 @@ const Recipe = ({ item, onDelete }) => {
     }
   };
 
-  const toggleExpand = () => {
+  const toggleExpand = (e) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      cardRef.current.style.transformOrigin = `${centerX}px ${centerY}px`;
+    }
     setIsExpanded(!isExpanded);
   };
 
@@ -129,6 +136,7 @@ const Recipe = ({ item, onDelete }) => {
 
   return (
     <div 
+      ref={cardRef}
       className={`${styles.card} ${isExpanded ? styles.expanded : ''}`}
       onClick={toggleExpand}
     >

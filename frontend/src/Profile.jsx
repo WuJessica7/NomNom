@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.scss";
@@ -6,7 +6,10 @@ import { useAuth } from './context/AuthContext';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, setUser, logout } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [introduction, setIntroduction] = useState(user?.introduction || '');
+  const [error, setError] = useState('');
 
   const handleRecipesClick = () => {
     navigate("/recipes");
@@ -25,6 +28,43 @@ const Profile = () => {
     navigate("/");
   };
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setIntroduction(user?.introduction || '');
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${user._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          introduction
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update introduction');
+      }
+
+      const updatedUser = await response.json();
+      setUser(updatedUser);
+      setIsEditing(false);
+      setError('');
+    } catch (err) {
+      setError('Failed to update introduction. Please try again.');
+    }
+  };
+
+  const handleCancel = () => {
+    setIntroduction(user?.introduction || '');
+    setIsEditing(false);
+    setError('');
+  };
+
   if (!user) {
     return null;
   }
@@ -39,12 +79,40 @@ const Profile = () => {
           value={user.email}
           readOnly
         />
-        <textarea
-          className={styles.profile__input}
-          placeholder="Introduction"
-          value={user.introduction || ''}
-          readOnly
-        />
+        
+        <div className={styles.introduction}>
+          {isEditing ? (
+            <>
+              <textarea
+                className={`${styles.profile__input} ${styles.introduction__textarea}`}
+                placeholder="Write something about yourself..."
+                value={introduction}
+                onChange={(e) => setIntroduction(e.target.value)}
+              />
+              <div className={styles.editButtons}>
+                <button onClick={handleSave} className={styles.saveButton}>
+                  Save
+                </button>
+                <button onClick={handleCancel} className={styles.cancelButton}>
+                  Cancel
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className={styles.introductionDisplay}>
+              <textarea
+                className={`${styles.profile__input} ${styles.introduction__textarea}`}
+                placeholder="Click Edit to add an introduction..."
+                value={user.introduction || ''}
+                readOnly
+              />
+              <button onClick={handleEditClick} className={styles.editButton}>
+                Edit
+              </button>
+            </div>
+          )}
+          {error && <div className={styles.error}>{error}</div>}
+        </div>
 
         <div className={styles.profile__list}>
           <div

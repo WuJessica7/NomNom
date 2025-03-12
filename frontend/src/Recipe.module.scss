@@ -6,12 +6,18 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
     position: relative;
     cursor: pointer;
-  
-    &:hover {
-      transform: translateY(-5px);
+
+    // Only apply transitions to the hover state
+    &:not(.expanded) {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
     }
   
     &.expanded {
@@ -25,6 +31,7 @@
       z-index: 1000;
       cursor: default;
       overflow-y: auto;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
   
       &:hover {
         transform: translate(-50%, -50%);
@@ -65,6 +72,8 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      background-color: #f8f8f8;
+      border-radius: 0 0 8px 8px;
   
       .chefName {
         font-size: 16px;
@@ -198,18 +207,6 @@
       }
     }
   }
-  
-  // Add overlay when card is expanded
-  .expanded::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
 
 .editButton {
   padding: 8px 16px;
@@ -314,6 +311,18 @@
 
 // Add overlay for delete confirmation
 .deleteConfirm::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+// Add overlay when card is expanded
+.expanded::before {
   content: '';
   position: fixed;
   top: 0;

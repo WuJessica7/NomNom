@@ -1,14 +1,14 @@
 # NomNom
 
 ## App Icon
-![NomNom App Icon](frontend/public/App_Icon.png)
+![NomNom App Icon](./frontend/public/App_Icon.png)
 
 
 ## Description
 NomNom is a social media platform that combines recipe discovery and ingredient tracking. It helps users explore new meals, manage their ingredients efficiently, and engage with a community of cooking enthusiasts.
 
 
-## Setup nstructions
+## Setup instructions
 
 ### Frontend
 #### Setup

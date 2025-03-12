@@ -60,6 +60,13 @@ const Recipes = () => {
     }
   };
 
+  const handleDelete = async (deletedId) => {
+    // Remove the deleted recipe from the state
+    setRecipes(prevRecipes => 
+      prevRecipes.filter(recipe => recipe._id !== deletedId)
+    );
+  };
+
   return (
     <div className={styles.recipes}>
       <div className={styles.header}>
@@ -77,7 +84,11 @@ const Recipes = () => {
       
       <div className={styles.recipes__grid}>
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe._id} item={recipe} />
+          <RecipeCard 
+            key={recipe._id} 
+            item={recipe} 
+            onDelete={handleDelete}
+          />
         ))}
       </div>
 

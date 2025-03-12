@@ -11,6 +11,7 @@ import Recipes from "./Recipes";
 import CreateRecipe from "./CreateRecipe";
 import Activity from "./Activity";
 import Profile from "./Profile";
+import EditRecipe from './EditRecipe';
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 // Protected Route component
@@ -55,6 +56,13 @@ function App() {
             <ProtectedRoute>
               <OtherNavigationBar screen_name="Create Recipe" />
               <CreateRecipe />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/edit-recipe/:id" element={
+            <ProtectedRoute>
+              <OtherNavigationBar />
+              <EditRecipe />
             </ProtectedRoute>
           } />
 

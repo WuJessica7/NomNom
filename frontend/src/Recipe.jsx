@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Recipe.module.scss";
 
-const Recipe = ({ item }) => {
+const Recipe = ({ item, onDelete }) => {
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const toggleFavorite = (e) => {
     e.stopPropagation();
@@ -13,6 +16,58 @@ const Recipe = ({ item }) => {
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    navigate(`/edit-recipe/${item._id}`);
+  };
+
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async (e) => {
+    e.stopPropagation();
+    try {
+      const response = await fetch(`http://localhost:5000/api/recipes/${item._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.ok) {
+        if (onDelete) {
+          onDelete(item._id);
+        }
+      } else {
+        console.error('Failed to delete recipe');
+      }
+    } catch (error) {
+      console.error('Error deleting recipe:', error);
+    }
+    setShowDeleteConfirm(false);
+  };
+
+  const cancelDelete = (e) => {
+    e.stopPropagation();
+    setShowDeleteConfirm(false);
+  };
+
+  // Check if current user is the author
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const currentUserId = currentUser?._id;
+  const authorId = item.author?._id;
+  const isAuthor = currentUserId && authorId && currentUserId === authorId;
+  
+  // Debug logs
+  console.log('Recipe:', item.strMeal);
+  console.log('Current User:', currentUser);
+  console.log('Current User ID:', currentUserId);
+  console.log('Recipe Author:', item.author);
+  console.log('Author ID:', authorId);
+  console.log('Is Author:', isAuthor);
 
   // Helper function to get all ingredients and measures
   const getIngredients = () => {
@@ -62,6 +117,39 @@ const Recipe = ({ item }) => {
         <p className={styles.ingredientCount}>
           {ingredientsList.length} ingredients
         </p>
+        
+        {/* Author actions */}
+        {isAuthor && (
+          <div className={styles.authorActions}>
+            <button 
+              className={styles.editButton}
+              onClick={handleEdit}
+            >
+              Edit Recipe
+            </button>
+            <button 
+              className={styles.deleteButton}
+              onClick={handleDelete}
+            >
+              Delete Recipe
+            </button>
+          </div>
+        )}
+
+        {/* Delete confirmation dialog */}
+        {showDeleteConfirm && (
+          <div className={styles.deleteConfirm} onClick={(e) => e.stopPropagation()}>
+            <p>Are you sure you want to delete this recipe?</p>
+            <div className={styles.deleteActions}>
+              <button onClick={confirmDelete} className={styles.confirmButton}>
+                Yes, Delete
+              </button>
+              <button onClick={cancelDelete} className={styles.cancelButton}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {isExpanded && (

@@ -80,7 +80,7 @@
 
 .label {
     display: inline-block;
-    width: 70px;
+    width: 85px;
     line-height: 40px; 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -147,7 +147,7 @@
 
 .no-acc-text {
     position: absolute;
-    top: 649px;
+    top: 679px;
     left: 441px;
     line-height: 150%;
     color: #828282;
@@ -155,7 +155,7 @@
 
 .sign-up-button {
     position: absolute;
-    top: 649px;
+    top: 679px;
     left: 579px;
     line-height: 150%;
     cursor: pointer;
@@ -163,7 +163,7 @@
 
 .have-acc-text {
     position: absolute;
-    top: 649px;
+    top: 679px;
     left: 436px;
     line-height: 150%;
     color: #828282;
@@ -171,7 +171,7 @@
 
 .sign-in-button {
     position: absolute;
-    top: 649px;
+    top: 679px;
     left: 587px;
     line-height: 150%;
     cursor: pointer;

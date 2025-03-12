@@ -109,6 +109,7 @@ export const AuthProvider = ({ children }) => {
     // Provide the authentication context value
     const value = {
         user,
+        setUser,
         token,
         loading,
         login,

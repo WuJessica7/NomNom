@@ -1,16 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from './context/AuthContext';
 import styles from "./Recipe.module.scss";
 
 const Recipe = ({ item, onDelete }) => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const toggleFavorite = (e) => {
+  // Check if recipe is in user's favorites on component mount
+  useEffect(() => {
+    if (user && user.favoriteRecipes) {
+      setIsFavorite(user.favoriteRecipes.some(favRecipe => 
+        favRecipe._id === item._id || favRecipe === item._id
+      ));
+    }
+  }, [user, item._id]);
+
+  const toggleFavorite = async (e) => {
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${user._id}/favorites/${item._id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to toggle favorite');
+      }
+
+      const data = await response.json();
+      setUser(data.user); // Update the user context with new favorites
+      setIsFavorite(data.isFavorited);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
   };
 
   const toggleExpand = () => {

@@ -1,5 +1,6 @@
 const User = require('../models/user.model.js');
 const mongoose = require('mongoose');
+const Recipe = require('../models/recipe.model.js');
 
 // Helper function to validate MongoDB ObjectId
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
@@ -275,6 +276,54 @@ const updateProfilePicture = async (req, res) => {
     }
 };
 
+const toggleFavorite = async (req, res) => {
+    try {
+        const { recipeId } = req.params;
+        
+        if (!isValidObjectId(recipeId)) {
+            return res.status(400).json({message: "Invalid recipe ID format"});
+        }
+
+        // Check if recipe exists
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.status(404).json({message: "Recipe not found"});
+        }
+
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Check if recipe is already in favorites
+        const favoriteIndex = user.favoriteRecipes.indexOf(recipeId);
+        if (favoriteIndex === -1) {
+            // Add to favorites
+            user.favoriteRecipes.push(recipeId);
+        } else {
+            // Remove from favorites
+            user.favoriteRecipes.splice(favoriteIndex, 1);
+        }
+
+        await user.save();
+
+        // Return updated user with populated favorites
+        const updatedUser = await User.findById(req.user._id)
+            .select('-password')
+            .populate('recipes')
+            .populate('favoriteRecipes')
+            .populate('followers', 'username')
+            .populate('following', 'username');
+
+        res.status(200).json({
+            user: updatedUser,
+            isFavorited: favoriteIndex === -1 // true if we just added it, false if we just removed it
+        });
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
     getUsers,
     getUser,
@@ -285,5 +334,6 @@ module.exports = {
     updatePersonalIngredient,
     deletePersonalIngredient,
     getPersonalIngredients,
-    updateProfilePicture
+    updateProfilePicture,
+    toggleFavorite
 }; 

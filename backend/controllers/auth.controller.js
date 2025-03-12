@@ -71,7 +71,12 @@ const loginUser = async (req, res) => {
 // Get current user
 const getMe = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).select('-password');
+        const user = await User.findById(req.user._id)
+            .select('-password')
+            .populate('recipes')
+            .populate('favoriteRecipes')
+            .populate('followers', 'username')
+            .populate('following', 'username');
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });

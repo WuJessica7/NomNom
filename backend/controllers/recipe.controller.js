@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipe.model.js');
+const User = require('../models/user.model.js');
 const mongoose = require('mongoose');
 
 // Helper function to validate MongoDB ObjectId
@@ -93,7 +94,18 @@ const createRecipe = async (req, res) => {
             dateModified: new Date()
         };
 
+        // Create the recipe
         const recipe = await Recipe.create(recipeData);
+
+        // Add recipe to user's recipes array
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            await Recipe.findByIdAndDelete(recipe._id);
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.recipes.push(recipe._id);
+        await user.save();
 
         const populatedRecipe = await Recipe.findById(recipe._id)
             .populate('author', 'username');

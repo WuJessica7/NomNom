@@ -134,6 +134,7 @@
     box-sizing: border-box;
     cursor: pointer;
     color: #fff;
+    width: 345px;
 }
    
 .footer {

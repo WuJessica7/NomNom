@@ -18,9 +18,12 @@ function SignInPage() {
                         <div className="label">Password</div>
                     </div>
 
-                    <div className="continue-button">
-                        <div className="continue">Continue</div>
-                    </div>
+                    <Link to="/ingredients">
+                        <div className="continue-button">
+                            <div className="continue">Continue</div>
+                        </div>
+                    </Link>
+
                 </div>
 
                 <div className="footer">

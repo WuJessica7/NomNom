@@ -41,7 +41,7 @@
     width: 525px;
 }
 
-.rectangle {
+.rectangle1 {
     position: absolute;
     top: 400px;
     left: 41px;
@@ -79,4 +79,129 @@
     box-sizing: border-box;
     width: 1065px;
     height: 1px;
+}
+
+.section-2 {
+    position: absolute;
+    top: 976px;
+    left: 321px;
+    width: 1065px;
+    height: 491px;
+}
+
+.header2 {
+    position: absolute;
+    top: 107px;
+    left: 540px;
+    font-size: 50px;
+    display: inline-block;
+    width: 525px;
+}
+
+.description2 {
+    position: absolute;
+    top: 316px;
+    left: 540px;
+    display: inline-block;
+    width: 525px;
+}
+
+.appIcon2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 15px;
+    width: 484.5px;
+    height: 491px;
+    object-fit: cover;
+}
+
+.line-div2 {
+    position: absolute;
+    top: 1593px;
+    left: 321px;
+    border-top: 1px solid #000;
+    box-sizing: border-box;
+    width: 1065px;
+    height: 1px;
+}
+
+.section-3 {
+    position: absolute;
+    top: 1717px;
+    left: 321px;
+    width: 1056.5px;
+    height: 491px;
+}
+
+.header3 {
+    position: absolute;
+    top: 138px;
+    left: 0px;
+    font-size: 50px;
+    display: inline-block;
+    width: 525px;
+}
+
+.description3 {
+    position: absolute;
+    top: 284px;
+    left: 0px;
+    display: inline-block;
+    width: 525px;
+}
+
+.appIcon3 {
+    position: absolute;
+    top: 0px;
+    left: 572px;
+    border-radius: 15px;
+    width: 484.5px;
+    height: 491px;
+    object-fit: cover;
+}
+
+.line-div3 {
+    position: absolute;
+    top: 2333px;
+    left: 321px;
+    border-top: 1px solid #000;
+    box-sizing: border-box;
+    width: 1065px;
+    height: 1px;
+}
+
+.section-4 {
+    position: absolute;
+    top: 2458px;
+    left: 321px;
+    width: 1065px;
+    height: 491px;
+}
+
+.header4 {
+    position: absolute;
+    top: 150px;
+    left: 540px;
+    font-size: 50px;
+    display: inline-block;
+    width: 525px;
+}
+
+.description4 {
+    position: absolute;
+    top: 296px;
+    left: 540px;
+    display: inline-block;
+    width: 525px;
+}
+
+.appIcon4 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 15px;
+    width: 484.5px;
+    height: 491px;
+    object-fit: cover;
 }

@@ -1,10 +1,15 @@
+import React from "react";
 import { NavigationBar, MainPageNavigationBar, OtherNavigationBar } from "./NavigationBars"
+import { BrowserRouter as Router, Routes, Route, Switch, Link } from "react-router-dom";
 import HomePage from "./HomePage";
 import SignInPage from "./SignInPage"
 import CreateAccountPage from "./CreateAccountPage"
 import SingleRecipePage from "./SingleRecipePage";
-import { BrowserRouter as Router, Routes, Route, Switch, Link } from "react-router-dom";
 import IngredientPage from "./IngredientsPage";
+import Favorites from "./Favorites";
+import Recipes from "./Recipes";
+import Activity from "./Activity";
+import Profile from "./Profile";
 
 
 function App() {

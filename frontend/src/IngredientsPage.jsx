@@ -1,6 +1,6 @@
 import "./IngredientsPage.css";
 import { NavigationBar } from "./NavigationBars";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Helper function to format the date in mm/dd/yyyy format
 const formatDate = (date) => {
@@ -22,17 +22,18 @@ const getExpirationStatus = (expirationDate) => {
 
 // Function to sort ingredients by expiration date
 const sortIngredients = (ingredients) => {
-  return ingredients.sort((a, b) => new Date(a.expirationDate) - new Date(b.expirationDate));
+  return [...ingredients].sort((a, b) => new Date(a.expirationDate) - new Date(b.expirationDate));
 };
 
-function IngredientBox({ ingredient, index, removeIngredient }) {
+function IngredientBox({ ingredient, onRemove }) {
+  console.log('Rendering ingredient:', ingredient);
   return (
-    <div className="ingredient-group" style={{ top: index * 100 }}>
+    <div className="ingredient-group">
       <div className="ingredient-rectangle" />
       <div className="ingredient-name">{ingredient.name}</div>
       <div className="quantity">{ingredient.quantity}</div>
       <div className="expiration-date">{getExpirationStatus(ingredient.expirationDate)}</div>
-      <div className="x" onClick={() => removeIngredient(index)}>X</div>
+      <div className="x" onClick={() => onRemove(ingredient._id)}>X</div>
     </div>
   );
 }
@@ -42,51 +43,189 @@ function IngredientPage() {
   const [ingredientName, setIngredientName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const addIngredient = () => {
-    if (!ingredientName || !quantity || !expirationDate) return;
+  // Fetch ingredients when component mounts
+  useEffect(() => {
+    console.log('Component mounted, fetching ingredients...');
+    fetchIngredients();
+  }, []);
 
-    const expiration = new Date(expirationDate);
+  // Log whenever ingredients state changes
+  useEffect(() => {
+    console.log('Ingredients state updated:', ingredients);
+  }, [ingredients]);
 
-    // Check if the expiration date is a valid date
-    if (isNaN(expiration.getTime())) {
-      alert("Please enter a valid expiration date.");
+  const fetchIngredients = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      console.log('Token:', token ? 'Present' : 'Missing');
+      
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      console.log('Fetching ingredients...');
+      const response = await fetch(`http://localhost:5000/api/ingredients`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          setIngredients([]);
+          return;
+        }
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch ingredients');
+      }
+
+      const data = await response.json();
+      console.log('Received data:', data);
+      
+      if (!data || !Array.isArray(data.ingredients)) {
+        console.warn('Invalid response format:', data);
+        setIngredients([]);
+        return;
+      }
+
+      const sortedIngredients = sortIngredients(data.ingredients);
+      console.log('Sorted ingredients:', sortedIngredients);
+      setIngredients(sortedIngredients);
+      setError("");
+    } catch (err) {
+      console.error('Error details:', err);
+      setError(err.message || 'Failed to connect to the server. Please check if the server is running.');
+      setIngredients([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addIngredient = async () => {
+    if (!ingredientName || !quantity || !expirationDate) {
+      setError("Please fill in all fields");
       return;
     }
 
-    const newIngredients = [
-      ...ingredients,
-      { name: ingredientName, quantity, expirationDate },
-    ];
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
 
-    // Sort the ingredients by expiration date before setting the state
-    setIngredients(sortIngredients(newIngredients));
+      const response = await fetch(`http://localhost:5000/api/ingredients`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: ingredientName,
+          quantity,
+          expirationDate
+        })
+      });
 
-    // Clear input fields
-    setIngredientName("");
-    setQuantity("");
-    setExpirationDate("");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add ingredient');
+      }
+
+      const data = await response.json();
+      console.log('Add ingredient response:', data);
+      
+      if (!data || !Array.isArray(data.ingredients)) {
+        console.warn('Invalid response format:', data);
+        await fetchIngredients(); // Fallback to fetching all ingredients
+        return;
+      }
+
+      const sortedIngredients = sortIngredients(data.ingredients);
+      console.log('Updated ingredients:', sortedIngredients);
+      setIngredients(sortedIngredients);
+      
+      // Clear input fields and error
+      setIngredientName("");
+      setQuantity("");
+      setExpirationDate("");
+      setError("");
+    } catch (err) {
+      console.error('Add ingredient error:', err);
+      setError(err.message || 'Failed to connect to the server. Please check if the server is running.');
+    }
   };
 
-  const removeIngredient = (index) => {
-    const newIngredients = ingredients.filter((_, i) => i !== index);
+  const removeIngredient = async (ingredientId) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
 
-    // Sort the ingredients again after removal
-    setIngredients(sortIngredients(newIngredients));
+      const response = await fetch(`http://localhost:5000/api/ingredients/${ingredientId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove ingredient');
+      }
+
+      const data = await response.json();
+      console.log('Remove ingredient response:', data);
+      
+      if (!data || !Array.isArray(data.ingredients)) {
+        console.warn('Invalid response format:', data);
+        await fetchIngredients(); // Fallback to fetching all ingredients
+        return;
+      }
+
+      const sortedIngredients = sortIngredients(data.ingredients);
+      console.log('Updated ingredients after removal:', sortedIngredients);
+      setIngredients(sortedIngredients);
+    } catch (err) {
+      console.error('Remove ingredient error:', err);
+      setError(err.message);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="ingredients-page">
+        <NavigationBar screen_name="Ingredients" />
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="ingredients-page">
       <NavigationBar screen_name="Ingredients" />
+      
+      {error && <div className="error-message">{error}</div>}
+      
       <div className="ingredients-list">
-        {ingredients.map((ingredient, index) => (
-          <IngredientBox
-            key={index}
-            ingredient={ingredient}
-            index={index}
-            removeIngredient={removeIngredient}
-          />
-        ))}
+        {ingredients.length === 0 && !loading && !error ? (
+          <div className="no-ingredients">
+            No ingredients added yet. Add your first ingredient below!
+          </div>
+        ) : (
+          ingredients.map((ingredient, index) => (
+            <IngredientBox
+              key={ingredient._id || index}
+              ingredient={ingredient}
+              onRemove={removeIngredient}
+            />
+          ))
+        )}
       </div>
 
       <div className="new-ingredient">
@@ -113,7 +252,7 @@ function IngredientPage() {
         </div>
         <div className="input-field" style={{ top: 100 }}>
           <input
-            type="text"
+            type="date"
             className="new-ingredient-text"
             placeholder="Expiration Date"
             value={expirationDate}

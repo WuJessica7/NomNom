@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('userId', data._id);
                 setToken(data.token);
                 setUser(data);
                 return { success: true };
@@ -84,6 +85,7 @@ export const AuthProvider = ({ children }) => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('userId', data._id);
                 setToken(data.token);
                 setUser(data);
                 return { success: true };
@@ -99,6 +101,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('userId');
         setToken(null);
         setUser(null);
     };

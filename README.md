@@ -1,7 +1,7 @@
 # NomNom
 
 ## App Icon
-![NomNom App Icon](./frontend/public/App_Icon.png)
+![NomNom App Icon](./frontend/public/App_Icon.svg)
 
 
 ## Description

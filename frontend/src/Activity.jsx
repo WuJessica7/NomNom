@@ -3,8 +3,8 @@ import styles from "./Activity.module.scss";
 import SearchBar from "./SearchBar";
 
 const activities = [
-  { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image.png", date: "03/10/2025" },
-  { id: 2, chef: "Chef B", food: "Food B", image: "Food_Image.png", date: "03/11/2025" },
+  { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image_2.png", date: "03/10/2025" },
+  { id: 2, chef: "Chef B", food: "Food B", image: "Food_Image_2.png", date: "03/11/2025" },
 ];
 
 const Activity = () => {

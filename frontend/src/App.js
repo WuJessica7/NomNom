@@ -8,6 +8,7 @@ import SingleRecipePage from "./SingleRecipePage";
 import IngredientPage from "./IngredientsPage";
 import Favorites from "./Favorites";
 import Recipes from "./Recipes";
+import CreateRecipe from "./CreateRecipe";
 import Activity from "./Activity";
 import Profile from "./Profile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -47,6 +48,13 @@ function App() {
             <ProtectedRoute>
               <NavigationBar screen_name="Recipes" />
               <Recipes />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/create-recipe" element={
+            <ProtectedRoute>
+              <OtherNavigationBar screen_name="Create Recipe" />
+              <CreateRecipe />
             </ProtectedRoute>
           } />
 

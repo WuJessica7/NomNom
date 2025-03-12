@@ -9,13 +9,25 @@ const getRecipes = async (req, res) => {
         // Extract pagination parameters from query string
         const page = parseInt(req.query.page) || 1; // Default to first page
         const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
+        const search = req.query.search || ''; // Get search query
         const skip = (page - 1) * limit;
 
+        // Build search query
+        const searchQuery = search
+            ? {
+                $or: [
+                    { strMeal: { $regex: search, $options: 'i' } },
+                    { strCategory: { $regex: search, $options: 'i' } },
+                    { strInstructions: { $regex: search, $options: 'i' } }
+                ]
+            }
+            : {};
+
         // Get total count for pagination info
-        const total = await Recipe.countDocuments({});
+        const total = await Recipe.countDocuments(searchQuery);
 
         // Get paginated recipes
-        const recipes = await Recipe.find({})
+        const recipes = await Recipe.find(searchQuery)
             .sort({ dateModified: -1 }) // Sort by newest first
             .skip(skip)
             .limit(limit)
@@ -64,7 +76,7 @@ const getRecipe = async (req, res) => {
 const createRecipe = async (req, res) => {
     try {
         // Validate required fields
-        const requiredFields = ['strMeal', 'strCategory', 'strInstructions', 'strMealThumb'];
+        const requiredFields = ['strMeal', 'strCategory', 'strInstructions'];
         const missingFields = requiredFields.filter(field => !req.body[field]);
         
         if (missingFields.length > 0) {
@@ -73,11 +85,15 @@ const createRecipe = async (req, res) => {
             });
         }
 
-        const recipe = await Recipe.create({
+        // Set default image URL if none provided
+        const recipeData = {
             ...req.body,
+            strMealThumb: req.body.strMealThumb || 'https://via.placeholder.com/400x300?text=No+Image',
             author: req.user._id,
             dateModified: new Date()
-        });
+        };
+
+        const recipe = await Recipe.create(recipeData);
 
         const populatedRecipe = await Recipe.findById(recipe._id)
             .populate('author', 'username');

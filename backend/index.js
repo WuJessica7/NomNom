@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
 require('dotenv').config();
 
 // A formality. I just like them being here to know where we are.
@@ -15,6 +17,35 @@ const authRoutes = require('./routes/auth.route.js');
 
 const app = express();
 
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: './uploads/',
+    filename: function(req, file, cb) {
+        cb(null, 'recipe-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5000000 }, // 5MB limit
+    fileFilter: function(req, file, cb) {
+        checkFileType(file, cb);
+    }
+});
+
+// Check file type
+function checkFileType(file, cb) {
+    const filetypes = /jpeg|jpg|png|gif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
+
 // Middleware Configuration
 app.use(cors({
     origin: 'http://localhost:3000', // Frontend 
@@ -23,6 +54,9 @@ app.use(cors({
     credentials: true // Allow cookies if you need them
 }));
 app.use(express.json());
+
+// Serve uploaded files statically
+app.use('/uploads', express.static('uploads'));
 
 // Add routes
 app.use('/api/auth', authRoutes);

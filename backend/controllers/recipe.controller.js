@@ -226,6 +226,50 @@ const addComment = async (req, res) => {
     }
 }
 
+const updateRecipeImage = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({message: "Invalid recipe ID format"});
+        }
+
+        const recipe = await Recipe.findById(id);
+        
+        if (!recipe) {
+            return res.status(404).json({message: "Recipe not found"});
+        }
+
+        // Check if user is the author
+        if (recipe.author.toString() !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to update this recipe"});
+        }
+
+        // Create the image URL
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+
+        const updatedRecipe = await Recipe.findByIdAndUpdate(
+            id,
+            {
+                strMealThumb: imageUrl,
+                dateModified: new Date()
+            },
+            { new: true }
+        )
+        .populate('author', 'username')
+        .populate('comments.user', 'username')
+        .populate('likes', 'username');
+
+        res.status(200).json(updatedRecipe);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
     getRecipes,
     getRecipe,
@@ -233,5 +277,6 @@ module.exports = {
     updateRecipe,
     deleteRecipe,
     toggleLike,
-    addComment
+    addComment,
+    updateRecipeImage
 };

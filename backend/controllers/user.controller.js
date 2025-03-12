@@ -307,11 +307,19 @@ const toggleFavorite = async (req, res) => {
 
         await user.save();
 
-        // Return updated user with populated favorites
+        // Return updated user with populated favorites and nested author information
         const updatedUser = await User.findById(req.user._id)
             .select('-password')
-            .populate('recipes')
-            .populate('favoriteRecipes')
+            .populate({
+                path: 'recipes'
+            })
+            .populate({
+                path: 'favoriteRecipes',
+                populate: {
+                    path: 'author',
+                    select: 'username'
+                }
+            })
             .populate('followers', 'username')
             .populate('following', 'username');
 

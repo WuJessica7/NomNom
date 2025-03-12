@@ -28,7 +28,6 @@ const Favorites = () => {
 
     return (
         <div className={styles.favorites}>
-            <h1 className={styles.title}>Favorites</h1>
             <SearchBar search={search} setSearch={setSearch} />
             <div className={styles.favorites__grid}>
                 {filteredItems.map((item) => (

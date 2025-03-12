@@ -23,7 +23,6 @@ const Activity = () => {
 
   return (
     <div className={styles.activity}>
-      <h1 className={styles.title}>ACTIVITY</h1>
 
       <SearchBar search={search} setSearch={setSearch} />
 

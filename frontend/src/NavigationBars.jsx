@@ -2,8 +2,8 @@ import "./NavigationBars.css";
 import { Link } from 'react-router-dom';
 
 function NavigationBar({ screen_name }) {
-    return(
-        <div className="navigationBar"> 
+    return (
+        <div className="navigationBar">
 
             <div className="screenName">{screen_name}</div>
 
@@ -11,7 +11,7 @@ function NavigationBar({ screen_name }) {
                 <img className="appIcon" alt="" src="App_Icon.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
-            
+
             <Link to="/favorites">
                 <img className="heartIcon" alt="" src="Heart_Icon.svg" />
             </Link>
@@ -39,7 +39,7 @@ function NavigationBar({ screen_name }) {
 
 
 function MainPageNavigationBar() {
-    return(
+    return (
         <div className="navigationBar">
             <Link to="/">
                 <img className="appIcon" alt="" src="App_Icon.png" />
@@ -54,9 +54,11 @@ function MainPageNavigationBar() {
 }
 
 
-function OtherNavigationBar() {
-    return(
+function OtherNavigationBar({ screen_name }) {
+    return (
         <div className="navigationBar">
+
+            <div className="screenName">{screen_name}</div>
             <Link to="/">
                 <img className="appIcon" alt="" src="App_Icon.png" />
                 <div className="appName">Nom Nom</div>
@@ -70,4 +72,4 @@ function OtherNavigationBar() {
 }
 
 
-export { NavigationBar, MainPageNavigationBar, OtherNavigationBar};
+export { NavigationBar, MainPageNavigationBar, OtherNavigationBar };

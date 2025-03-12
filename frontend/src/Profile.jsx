@@ -30,7 +30,6 @@ const Profile = ({
   return (
     <div className={styles["profile-container"]}>
       <div className={styles.profile}>
-        <h1 className={styles.profile__title}>Profile</h1>
 
         <input
           className={styles.profile__input}

@@ -23,7 +23,6 @@ const Recipes = () => {
 
   return (
     <div className={styles.recipes}>
-      <h1>Recipes</h1>
       <SearchBar search={search} setSearch={setSearch} />
       <div className={styles.recipes__grid}>
         {filteredItems.map((item) => (

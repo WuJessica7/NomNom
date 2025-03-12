@@ -1,0 +1,113 @@
+.navigationBar {
+    width: 100%;
+    left: 321px;
+    top: 25px;
+    position: relative;
+    height: 40px;
+    text-align: center;
+    font-size: 24px;
+    color: #000;
+    font-family: Outfit;
+}
+
+.appIcon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40.7px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.appName {
+    position: absolute;
+    top: 7px;
+    left: 51px;
+    font-size: 24px;
+    text-transform: uppercase;
+    display: inline-block;
+    color: #1e1e1e;
+    width: 120px;
+    cursor: pointer;
+}
+
+.screenName {
+    position: absolute;
+    top: 7px;
+    left: 455.15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: inline-block;
+    width: 157.1px;
+}
+
+.heartIcon {
+    position: absolute;
+    top: 0px;
+    left: 825px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.bookIcon {
+    position: absolute;
+    top: 0px;
+    left: 875px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.saltIcon {
+    position: absolute;
+    top: 0px;
+    left: 925px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.bellIcon {
+    position: absolute;
+    top: 0px;
+    left: 975px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.userIcon {
+    position: absolute;
+    top: 0px;
+    left: 1025px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.signIn {
+    position: absolute;
+    top: 7px;
+    left: 976px;
+    text-transform: uppercase;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.back {
+    width: 55px;
+    position: absolute;
+    top: 8px;
+    left: 1010px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Outfit;
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NomNom
 
 ## App Icon

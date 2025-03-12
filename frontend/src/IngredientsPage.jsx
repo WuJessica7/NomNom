@@ -2,13 +2,36 @@ import "./IngredientsPage.css";
 import { NavigationBar } from "./NavigationBars";
 import { useState } from "react";
 
+// Helper function to format the date in mm/dd/yyyy format
+const formatDate = (date) => {
+  const d = new Date(date);
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const year = d.getFullYear();
+  return `${month}/${day}/${year}`;
+};
+
+// Helper function to get expiration status
+const getExpirationStatus = (expirationDate) => {
+  const today = new Date();
+  const expiration = new Date(expirationDate);
+  if (expiration.toDateString() === today.toDateString()) return "EXPIRES TODAY";
+  if (expiration < today) return "EXPIRED";
+  return formatDate(expirationDate);
+};
+
+// Function to sort ingredients by expiration date
+const sortIngredients = (ingredients) => {
+  return ingredients.sort((a, b) => new Date(a.expirationDate) - new Date(b.expirationDate));
+};
+
 function IngredientBox({ ingredient, index, removeIngredient }) {
   return (
     <div className="ingredient-group" style={{ top: index * 100 }}>
       <div className="ingredient-rectangle" />
       <div className="ingredient-name">{ingredient.name}</div>
       <div className="quantity">{ingredient.quantity}</div>
-      <div className="expiration-date">{ingredient.expirationDate}</div>
+      <div className="expiration-date">{getExpirationStatus(ingredient.expirationDate)}</div>
       <div className="x" onClick={() => removeIngredient(index)}>X</div>
     </div>
   );
@@ -23,10 +46,21 @@ function IngredientPage() {
   const addIngredient = () => {
     if (!ingredientName || !quantity || !expirationDate) return;
 
-    setIngredients([
+    const expiration = new Date(expirationDate);
+
+    // Check if the expiration date is a valid date
+    if (isNaN(expiration.getTime())) {
+      alert("Please enter a valid expiration date.");
+      return;
+    }
+
+    const newIngredients = [
       ...ingredients,
       { name: ingredientName, quantity, expirationDate },
-    ]);
+    ];
+
+    // Sort the ingredients by expiration date before setting the state
+    setIngredients(sortIngredients(newIngredients));
 
     // Clear input fields
     setIngredientName("");
@@ -35,7 +69,10 @@ function IngredientPage() {
   };
 
   const removeIngredient = (index) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
+    const newIngredients = ingredients.filter((_, i) => i !== index);
+
+    // Sort the ingredients again after removal
+    setIngredients(sortIngredients(newIngredients));
   };
 
   return (

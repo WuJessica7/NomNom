@@ -231,6 +231,50 @@ const getPersonalIngredients = async (req, res) => {
     }
 }
 
+const updateProfilePicture = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({message: "Invalid user ID format"});
+        }
+
+        // Check if user is modifying their own profile
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to update this profile picture"});
+        }
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Create the image URL
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            {
+                profilePicture: imageUrl
+            },
+            { new: true }
+        )
+        .select('-password')
+        .populate('recipes')
+        .populate('favoriteRecipes')
+        .populate('followers', 'username')
+        .populate('following', 'username');
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
     getUsers,
     getUser,
@@ -240,5 +284,6 @@ module.exports = {
     addPersonalIngredient,
     updatePersonalIngredient,
     deletePersonalIngredient,
-    getPersonalIngredients
+    getPersonalIngredients,
+    updateProfilePicture
 }; 

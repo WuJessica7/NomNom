@@ -2,15 +2,12 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.scss";
+import { useAuth } from './context/AuthContext';
 
-const Profile = ({
-  email,
-  introduction,
-  recipesCount,
-  favoritesCount,
-  ingredientsCount,
-}) => {
+const Profile = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
   const handleRecipesClick = () => {
     navigate("/recipes");
   };
@@ -24,24 +21,28 @@ const Profile = ({
   };
 
   const handleLogout = () => {
+    logout();
     navigate("/");
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className={styles["profile-container"]}>
       <div className={styles.profile}>
-
         <input
           className={styles.profile__input}
           type="email"
           placeholder="Email"
-          value={email}
+          value={user.email}
           readOnly
         />
         <textarea
           className={styles.profile__input}
           placeholder="Introduction"
-          value={introduction}
+          value={user.introduction || ''}
           readOnly
         />
 
@@ -51,7 +52,7 @@ const Profile = ({
             onClick={handleRecipesClick}
           >
             <span className="item-label">Recipes</span>
-            <span className="item-count">{recipesCount}</span>
+            <span className="item-count">{user.recipes?.length || 0}</span>
             <FaArrowRight />
           </div>
           <div
@@ -59,7 +60,7 @@ const Profile = ({
             onClick={handleFavoritesClick}
           >
             <span className="item-label">Favorites</span>
-            <span className="item-count">{favoritesCount}</span>
+            <span className="item-count">{user.favoriteRecipes?.length || 0}</span>
             <FaArrowRight />
           </div>
           <div
@@ -67,7 +68,7 @@ const Profile = ({
             onClick={handleIngredientsClick}
           >
             <span className="item-label">Ingredients</span>
-            <span className="item-count">{ingredientsCount}</span>
+            <span className="item-count">{user.personalIngredients?.length || 0}</span>
             <FaArrowRight />
           </div>
         </div>

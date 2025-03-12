@@ -1,10 +1,27 @@
 import "./SignInAndCreateAccPage.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from './context/AuthContext';
 
 function CreateAccountPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    
+    const result = await register(username, email, password);
+    if (result.success) {
+      navigate('/ingredients');
+    } else {
+      setError(result.message || 'Registration failed');
+    }
+  };
 
   return(
     <div className="signin">
@@ -13,7 +30,20 @@ function CreateAccountPage() {
         <div className="create-account-text">Create Account</div>
         <img className="appicon" alt="" src="App_Icon.svg" />
 
-        <div className="fields">
+        <form onSubmit={handleSubmit} className="fields">
+          <div className="username-field">
+            <label htmlFor="username" className="label">Username: </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              minLength={3}
+            />
+          </div>
+
           <div className="email-field">
             <label htmlFor="email" className="label">Email: </label>
             <input
@@ -22,6 +52,7 @@ function CreateAccountPage() {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -33,15 +64,17 @@ function CreateAccountPage() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
             />
           </div>
 
-          <Link to="/ingredients">
-            <div className="continue-button">
-              <div className="continue">Continue</div>
-            </div>
-          </Link>
-        </div>
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" className="continue-button">
+            <div className="continue">Continue</div>
+          </button>
+        </form>
 
         <div className="footer">
           <div className="have-acc-text">Already have an account?</div>

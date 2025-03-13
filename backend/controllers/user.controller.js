@@ -276,7 +276,6 @@ const updateProfilePicture = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
 const followUser = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -306,7 +305,9 @@ const unfollowUser = async (req, res) => {
         res.status(200).json({ message: "User unfollowed successfully." });
     } catch (error) {
         res.status(500).json({ error: error.message });
-=======
+    }
+};
+        
 const toggleFavorite = async (req, res) => {
     try {
         const { recipeId } = req.params;

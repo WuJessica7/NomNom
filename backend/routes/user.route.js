@@ -15,6 +15,10 @@ const {
     deletePersonalIngredient,
     getPersonalIngredients,
     updateProfilePicture,
+    followUser,
+    unfollowUser,
+    getFollowers,
+    getFollowing,
     toggleFavorite,
     toggleCooked
 } = require('../controllers/user.controller.js');

@@ -311,7 +311,7 @@ const unfollowUser = async (req, res) => {
 const getFollowers = async (req, res) => {
     try {
         const { userId } = req.params;
-        const user = await User.findById(userId).populate("followers", "username email");
+        const user = await User.findById(userId).populate("followers", "username");
         
         if (!user) {
             return res.status(404).json({ message: "User not found." });
@@ -326,7 +326,7 @@ const getFollowers = async (req, res) => {
 const getFollowing = async (req, res) => {
     try {
         const { userId } = req.params;
-        const user = await User.findById(userId).populate("following", "username email");
+        const user = await User.findById(userId).populate("following", "username");
         
         if (!user) {
             return res.status(404).json({ message: "User not found." });

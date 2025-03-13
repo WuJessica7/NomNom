@@ -52,11 +52,12 @@ JWT_SECRET=yesanything!
 ```
 
 Save your .env file. The hard stuff is over. 
-Run the following commands to get the backend ready on port 5000.
+Run the following commands to get the backend ready on port 5000. 'npm run populate' gets you some starter recipes in the database, and 'npm run dev' gets your backend fully running!
 
 #### Setup (Backend)
 ```
 npm install
+npm run populate
 npm run dev
 ```
 

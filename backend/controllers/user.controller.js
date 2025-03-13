@@ -320,6 +320,13 @@ const toggleFavorite = async (req, res) => {
                     select: 'username'
                 }
             })
+            .populate({
+                path: 'cookedRecipes',
+                populate: {
+                    path: 'author',
+                    select: 'username'
+                }
+            })
             .populate('followers', 'username')
             .populate('following', 'username');
 

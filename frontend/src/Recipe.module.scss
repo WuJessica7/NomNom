@@ -32,26 +32,49 @@
       cursor: default;
       overflow-y: auto;
       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+      background: #fff;
   
       &:hover {
         transform: translate(-50%, -50%);
       }
-  
+
+      .imageContainer {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+
+        .image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .imageContainer {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+
       .image {
-        height: 300px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 8px;
+        z-index: 2;
       }
     }
   
-    .image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-  
-    .favoriteButton {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+    .actionButton {
       background: none;
       border: none;
       font-size: 24px;
@@ -60,7 +83,6 @@
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       transition: transform 0.2s ease;
-      z-index: 2;
   
       &:hover {
         transform: scale(1.1);
@@ -331,52 +353,4 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: -1;
-}
-
-.imageContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 75%; // 4:3 aspect ratio
-    overflow: hidden;
-    border-radius: 8px;
-
-    .image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .actions {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        display: flex;
-        gap: 8px;
-        padding: 4px;
-        border-radius: 4px;
-        background: rgba(0, 0, 0, 0.3);
-    }
-
-    .actionButton {
-        background: none;
-        border: none;
-        padding: 4px;
-        cursor: pointer;
-        font-size: 20px;
-        transition: transform 0.2s;
-        line-height: 1;
-
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
-
-    .favoriteButton, .cookedButton {
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
 }

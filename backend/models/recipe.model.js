@@ -6,8 +6,7 @@ const ingredientSchema = new mongoose.Schema({
         required: true
     },
     measure: {
-        type: String,
-        required: true
+        type: String
     }
 });
 

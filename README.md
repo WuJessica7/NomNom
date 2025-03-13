@@ -65,7 +65,7 @@ npm install sass
 ```
 npm start
 ```
-You should be ready to go now! There's a handful of recipes waiting for you.
+You should be ready to go now! There's a handful of recipes waiting for you. Hopefully it (slowly) opens automatically. If not, it's waiting for you in localhost:3000 on your browser.
 
 ## Contributors
 Risa Sun\

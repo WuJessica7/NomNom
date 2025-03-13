@@ -473,6 +473,10 @@ module.exports = {
     deletePersonalIngredient,
     getPersonalIngredients,
     updateProfilePicture,
+    followUser,
+    unfollowUser,
+    getFollowers,
+    getFollowing,
     toggleFavorite,
     toggleCooked
 }; 

@@ -74,7 +74,14 @@ const getMe = async (req, res) => {
         const user = await User.findById(req.user._id)
             .select('-password')
             .populate('recipes')
-            .populate('favoriteRecipes')
+            .populate({
+                path: 'favoriteRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
+            .populate({
+                path: 'cookedRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
             .populate('followers', 'username')
             .populate('following', 'username');
         res.status(200).json(user);

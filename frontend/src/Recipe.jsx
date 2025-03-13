@@ -3,25 +3,37 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from './context/AuthContext';
 import styles from "./Recipe.module.scss";
 
-const Recipe = ({ item, onDelete }) => {
+const Recipe = ({ item, onDelete, hideFavoriteButton }) => {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isCooked, setIsCooked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [error, setError] = useState('');
   const cardRef = useRef(null);
 
-  // Check if recipe is in user's favorites on component mount
+  // Check if recipe is in user's favorites and cooked recipes on component mount
   useEffect(() => {
     if (user && user.favoriteRecipes) {
       setIsFavorite(user.favoriteRecipes.some(favRecipe => 
         favRecipe._id === item._id || favRecipe === item._id
       ));
     }
+    if (user && user.cookedRecipes) {
+      setIsCooked(user.cookedRecipes.some(cookedRecipe => 
+        cookedRecipe._id === item._id || cookedRecipe === item._id
+      ));
+    }
   }, [user, item._id]);
 
   const toggleFavorite = async (e) => {
     e.stopPropagation();
+    if (!user) {
+      console.error('Please log in to favorite recipes');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:5000/api/users/${user._id}/favorites/${item._id}`, {
         method: 'POST',
@@ -39,6 +51,33 @@ const Recipe = ({ item, onDelete }) => {
       setIsFavorite(data.isFavorited);
     } catch (error) {
       console.error('Error toggling favorite:', error);
+    }
+  };
+
+  const toggleCooked = async (e) => {
+    e.stopPropagation();
+    if (!user) {
+      console.error('Please log in to mark recipes as cooked');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${user._id}/cooked/${item._id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to toggle cooked status');
+      }
+
+      const data = await response.json();
+      setUser(data.user); // Update the user context with new cooked recipes
+      setIsCooked(data.isCooked);
+    } catch (error) {
+      console.error('Error toggling cooked status:', error);
     }
   };
 
@@ -140,10 +179,27 @@ const Recipe = ({ item, onDelete }) => {
       className={`${styles.card} ${isExpanded ? styles.expanded : ''}`}
       onClick={toggleExpand}
     >
-      <img src={item.strMealThumb} alt={item.strMeal} className={styles.image} />
-      <button className={styles.favoriteButton} onClick={toggleFavorite}>
-        {isFavorite ? "❤️" : "🤍"}
-      </button>
+      <div className={styles.imageContainer}>
+        <img src={item.strMealThumb} alt={item.strMeal} className={styles.image} />
+        <div className={styles.actions}>
+          {!hideFavoriteButton && (
+            <button
+              className={`${styles.actionButton} ${styles.favoriteButton}`}
+              onClick={toggleFavorite}
+              title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              {isFavorite ? '❤️' : '🤍'}
+            </button>
+          )}
+          <button
+            className={`${styles.actionButton} ${styles.cookedButton}`}
+            onClick={toggleCooked}
+            title={isCooked ? 'Remove from cooked' : 'Mark as cooked'}
+          >
+            {isCooked ? '👨‍🍳' : '🍽️'}
+          </button>
+        </div>
+      </div>
       <div className={styles.cardBottom}>
         <h4 className={styles.chefName}>{item.author?.username || 'Unknown Chef'}</h4>
         <p className={styles.foodName}>{item.strMeal}</p>

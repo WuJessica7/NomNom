@@ -1,50 +1,45 @@
-import React, { useState } from "react";
-import styles from "./Activity.module.scss";
-import SearchBar from "./SearchBar";
-
-const activities = [
-  { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image_2.png", date: "03/10/2025" },
-  { id: 2, chef: "Chef B", food: "Food B", image: "Food_Image_2.png", date: "03/11/2025" },
-];
+import React, { useState } from 'react';
+import { useAuth } from './context/AuthContext';
+import Recipe from './Recipe';
+import styles from './Activity.module.scss';
 
 const Activity = () => {
-  const [favorites, setFavorites] = useState([]);
-  const [search, setSearch] = useState("");
+    const { user } = useAuth();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-  const toggleFavorite = (id) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    if (!user) {
+        return <div className={styles.activity}>Please log in to view your activity.</div>;
+    }
+
+    // Filter out invalid or deleted recipes
+    const validRecipes = user.cookedRecipes?.filter(recipe => 
+        recipe && 
+        recipe._id && 
+        recipe.strMeal && 
+        recipe.strMealThumb && 
+        recipe.strCategory
+    ) || [];
+
+    return (
+        <div className={styles.activity}>
+            <div className={styles.recipeGrid}>
+                {validRecipes.length > 0 ? (
+                    validRecipes.map((recipe) => (
+                        <Recipe 
+                            key={recipe._id} 
+                            item={recipe} 
+                            hideFavoriteButton={true}
+                        />
+                    ))
+                ) : (
+                    <div className={styles.message}>
+                        You haven't cooked any recipes yet.
+                    </div>
+                )}
+            </div>
+        </div>
     );
-  };
-
-  const filteredItems = activities.filter((item) =>
-    item.food.toLowerCase().includes(search.toLowerCase())
-  );
-
-  return (
-    <div className={styles.activity}>
-
-      <div className={styles.gridContainer}>
-        {filteredItems.map((item) => (
-          <div key={item.id} className={styles.card}>
-            <div className={styles.imageContainer}>
-              <img src={item.image} alt={item.food} className={styles.image} />
-              <button
-                className={styles.heartButton}
-                onClick={() => toggleFavorite(item.id)}
-              >
-                {favorites.includes(item.id) ? "❤️" : "🤍"}
-              </button>
-            </div>
-            <div className={styles.info}>
-              <p className={styles.foodName}>{item.food}</p>
-              <p className={styles.foodDate}>{item.date}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 };
 
 export default Activity;

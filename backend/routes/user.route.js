@@ -15,7 +15,8 @@ const {
     deletePersonalIngredient,
     getPersonalIngredients,
     updateProfilePicture,
-    toggleFavorite
+    toggleFavorite,
+    toggleCooked
 } = require('../controllers/user.controller.js');
 
 // Configure multer for profile picture uploads
@@ -61,5 +62,13 @@ router.delete('/:id/ingredients/:ingredientId', authentication, deletePersonalIn
 
 // Favorite routes
 router.post('/:id/favorites/:recipeId', authentication, toggleFavorite);
+
+// Cooked recipes routes
+router.post('/:id/cooked/:recipeId', authentication, toggleCooked);
+
+// Protected routes
+router.use(authentication);
+router.post('/toggle-favorite', toggleFavorite);
+router.post('/toggle-cooked', toggleCooked);
 
 module.exports = router; 

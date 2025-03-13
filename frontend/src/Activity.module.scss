@@ -1,78 +1,47 @@
 .activity {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
     padding: 40px;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    background-color: #F9F5F6;
+    min-height: calc(100vh - 60px); // Account for navbar height
 
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 30px;
+    .recipeGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+        padding: 24px;
+        margin: 0 auto;
+        max-width: 1200px;
+        width: 100%;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .loading, .error, .message {
         text-align: center;
-        color: #333;
-    }
-
-    .gridContainer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
         padding: 20px;
+        font-size: 18px;
+        width: 100%;
     }
 
-    .card {
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 10px;
-        margin: 20px;
-        max-width: 500px;
-        transition: transform 0.3s ease-in-out;
+    .loading {
+        color: #666;
+    }
 
-        &:hover {
-            transform: scale(1.05);
-        }
+    .error {
+        color: #dc3545;
+    }
 
-        .imageContainer {
-            position: relative;
-            text-align: center;
-
-            .image {
-                width: 100%;
-                border-radius: 10px;
-            }
-
-            .heartButton {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-            }
-        }
-
-        .info {
-            background: #f5f5f5;
-            padding: 10px;
-            border-radius: 0 0 10px 10px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .foodName {
-                flex: 1;
-                text-align: left;
-            }
-
-            .foodDate {
-                flex: 1;
-                text-align: right;
-                font-size: 14px;
-                color: #777;
-            }
-        }
+    .message {
+        color: #666;
+        font-style: italic;
+        grid-column: 1 / -1;
     }
 }

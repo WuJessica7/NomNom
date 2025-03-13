@@ -63,6 +63,12 @@ const userSchema = new mongoose.Schema({
         ref: 'Recipe'
     }],
 
+    cookedRecipes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recipe',
+        default: []
+    }],
+
     personalIngredients: {
         type: [personalIngredientSchema],
         default: []

@@ -332,3 +332,51 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; // 4:3 aspect ratio
+    overflow: hidden;
+    border-radius: 8px;
+
+    .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .actions {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: flex;
+        gap: 8px;
+        padding: 4px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .actionButton {
+        background: none;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+        font-size: 20px;
+        transition: transform 0.2s;
+        line-height: 1;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .favoriteButton, .cookedButton {
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

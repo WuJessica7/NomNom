@@ -332,6 +332,66 @@ const toggleFavorite = async (req, res) => {
     }
 };
 
+const toggleCooked = async (req, res) => {
+    try {
+        const { id, recipeId } = req.params;
+        
+        if (!isValidObjectId(recipeId)) {
+            return res.status(400).json({message: "Invalid recipe ID format"});
+        }
+
+        // Check if recipe exists
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.status(404).json({message: "Recipe not found"});
+        }
+
+        // Check if user is modifying their own cooked recipes
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to modify this user's cooked recipes"});
+        }
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Check if recipe is already in cooked recipes
+        const cookedIndex = user.cookedRecipes.indexOf(recipeId);
+        if (cookedIndex === -1) {
+            // Add to cooked recipes
+            user.cookedRecipes.push(recipeId);
+        } else {
+            // Remove from cooked recipes
+            user.cookedRecipes.splice(cookedIndex, 1);
+        }
+
+        await user.save();
+
+        // Return updated user with populated fields
+        const updatedUser = await User.findById(id)
+            .select('-password')
+            .populate('recipes')
+            .populate({
+                path: 'favoriteRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
+            .populate({
+                path: 'cookedRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
+            .populate('followers', 'username')
+            .populate('following', 'username');
+
+        res.status(200).json({
+            user: updatedUser,
+            isCooked: cookedIndex === -1 // true if we just added it, false if we just removed it
+        });
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
     getUsers,
     getUser,
@@ -343,5 +403,6 @@ module.exports = {
     deletePersonalIngredient,
     getPersonalIngredients,
     updateProfilePicture,
-    toggleFavorite
+    toggleFavorite,
+    toggleCooked
 }; 

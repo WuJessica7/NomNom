@@ -275,6 +275,38 @@ const updateProfilePicture = async (req, res) => {
     }
 };
 
+const followUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const currentUser = req.user.id;
+
+        if (userId === currentUser) {
+            return res.status(400).json({ message: "You cannot follow yourself." });
+        }
+
+        await User.findByIdAndUpdate(currentUser, { $addToSet: { following: userId } });
+        await User.findByIdAndUpdate(userId, { $addToSet: { followers: currentUser } });
+
+        res.status(200).json({ message: "User followed successfully." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const unfollowUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const currentUser = req.user.id;
+
+        await User.findByIdAndUpdate(currentUser, { $pull: { following: userId } });
+        await User.findByIdAndUpdate(userId, { $pull: { followers: currentUser } });
+
+        res.status(200).json({ message: "User unfollowed successfully." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getUsers,
     getUser,

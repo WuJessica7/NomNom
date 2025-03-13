@@ -1,21 +1,20 @@
 .recipes {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     margin: 0 auto;
     padding: 40px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1180px;
     box-sizing: border-box;
     background-color: #F9F5F6;
 
     .header {
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
-        gap: 24px;
-        margin-bottom: 32px;
+        gap: 20px;
 
         .createButton {
             padding: 12px 24px;
@@ -42,6 +41,7 @@
         margin: 0 auto;
         max-width: 1200px;
         width: 100%;
+        margin-left: 5px;
     }
 }
 

@@ -201,7 +201,6 @@ const Recipe = ({ item, onDelete, hideFavoriteButton }) => {
         </div>
       </div>
       <div className={styles.cardBottom}>
-        <h4 className={styles.chefName}>{item.author?.username || 'Unknown Chef'}</h4>
         <p className={styles.foodName}>{item.strMeal}</p>
         <p className={styles.category}>{item.strCategory}</p>
         

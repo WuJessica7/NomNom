@@ -38,17 +38,9 @@
         transform: translate(-50%, -50%);
       }
 
-      .imageContainer {
-        width: 100%;
-        height: 400px;
-        position: relative;
-        overflow: hidden;
-
+      .imageContainer,
         .image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+          display: none;
       }
     }
 

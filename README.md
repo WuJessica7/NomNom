@@ -10,12 +10,23 @@ NomNom is a social media platform that combines recipe discovery and ingredient 
 
 ## Setup instructions
 
+It is recommended to use VS Code.
+
+### Obtaining the code
+
+Inside your folder of choice, clone the repository, and enter.
+
+```
+git clone https://github.com/WuJessica7/NomNom
+cd NomNom
+```
+
 ### Backend
 #### Preparing the database
 
 Please create a MongoDB Atlas account [here](https://www.mongodb.com/cloud/atlas/register).
 
-Read the terms and service... or don't.
+Read the terms of service, or don't. Skip the personalization page in the bottom right.
 
 When reaching the page "Deploy your cluster", select "Free" and click "Create Deployment" in the bottom right.
 
@@ -78,10 +89,10 @@ npm start
 You should be ready to go now! Hopefully it (slowly) opens automatically. If not, it's waiting for you in localhost:3000 on your browser.
 
 ## Contributors
-Risa Sun\
-Diego Paz\
-Dohyun Kim\
-Jessica Wu
+Risa Sun (risasun)\
+Diego Paz (dpaz52418)\
+Dohyun Kim (dhkim142)\
+Jessica Wu (WuJessica7)
 
 ## Additional Information
 NomNom was made as a project for CS35L taught by Professor Paul Eggert at UCLA in Winter 2025.

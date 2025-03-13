@@ -2,6 +2,8 @@ import "./IngredientsPage.css";
 import { NavigationBar } from "./NavigationBars";
 import { useState, useEffect } from "react";
 
+const getLocalDate = (dateString) => new Date(`${dateString}T00:00:00`);
+
 // Helper function to format the date in mm/dd/yyyy format
 const formatDate = (date) => {
   const d = new Date(date);
@@ -13,10 +15,13 @@ const formatDate = (date) => {
 
 // Helper function to get expiration status
 const getExpirationStatus = (expirationDate) => {
-  const today = new Date();
-  const expiration = new Date(expirationDate);
-  if (expiration.toDateString() === today.toDateString()) return "EXPIRES TODAY";
-  if (expiration < today) return "EXPIRED";
+  const today = new Date().setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+  const expiration = new Date(expirationDate).setHours(0, 0, 0, 0); // Set time to midnight
+
+  if (expiration < today) {
+    return "EXPIRED";
+  }
+
   return formatDate(expirationDate);
 };
 

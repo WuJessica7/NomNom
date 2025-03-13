@@ -11,7 +11,8 @@
 
 .ingredients-list {
     position: relative;
-    margin: 150px auto;
+    top: 110px;
+    left: 321px;
     width: 705px;
     max-height: 788px;
     font-size: 20px;
@@ -20,7 +21,6 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .ingredient-group {
@@ -142,8 +142,7 @@
 }
 
 .no-ingredients {
-    text-align: center;
-    padding: 20px;
+    text-align: left;
     color: #666;
     font-style: italic;
     background-color: #f8f8f8;

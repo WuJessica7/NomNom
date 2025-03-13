@@ -4,7 +4,6 @@ import { NavigationBar, OtherNavigationBar } from "./NavigationBars";
 import HomePage from "./HomePage";
 import SignInPage from "./SignInPage";
 import CreateAccountPage from "./CreateAccountPage";
-import SingleRecipePage from "./SingleRecipePage";
 import IngredientPage from "./IngredientsPage";
 import Favorites from "./Favorites";
 import Recipes from "./Recipes";
@@ -83,12 +82,6 @@ function App() {
             <ProtectedRoute>
               <OtherNavigationBar screen_name="Profile" />
               <Profile />
-            </ProtectedRoute>
-          } />
-
-          <Route path="/recipe" element={
-            <ProtectedRoute>
-              <SingleRecipePage />
             </ProtectedRoute>
           } />
           

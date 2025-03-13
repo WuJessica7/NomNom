@@ -29,22 +29,22 @@ You might need to wait a minute, but soon you'll get your awesome CONNECTION STR
 mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.hna5p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 ```
 
-Of course, instead of USERNAME and PASSWORD, it'll be the actual username and password you created for your database user earlier.
+Of course, instead of USERNAME, you'll have your database username there. As for PASSWORD, later you can put the actual password you assigned to your database user earlier.
 
 Copy this connection string. 
 
 Click "Done" in the bottom right.
 
-To the left, look for a section titled "Security". Click on QuickStart. Scroll down to a section that states, "Add entries to your IP Access List." Add an IP Address "0.0.0.0". This allows any IP address to access the database.
+To the left, look for a section titled "Security". Click on QuickStart. Scroll down to a section that states, "Add entries to your IP Access List." Add an IP Address "0.0.0.0". This allows any IP address to access the database. 
 
-Create a .env file inside the backend repository in the way you like.
+We're done with MongoDB Atlas. Return to your repository. Create a .env file inside the backend repository in the way you like.
 
 ```
 cd backend
 touch .env
 ```
 
-Inside this file, define a variable MONGODB_URI as follows using the connection string still copied in your clipboard. Make sure your username and password for your database user created earlier are in the USERNAME and PASSWORD fields. While you're at it, also create a cool secret key assigned to JWT_SECRET; this can be anything you want!
+Inside this file, define a variable MONGODB_URI as follows using the connection string still copied in your clipboard. Make sure your username and password for your database user created earlier are in the USERNAME and PASSWORD fields, you can remove the "<>" signs. While you're at it, also create a cool secret key assigned to JWT_SECRET; this can be anything you want!
 
 ```
 MONGODB_URI=mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.hna5p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -63,7 +63,11 @@ npm run dev
 
 ### Frontend
 #### Setup (Frontend)
+
+Now setup your frontend.
+
 ```
+cd ..
 cd frontend
 npm install
 npm install react-icons

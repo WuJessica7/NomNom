@@ -307,6 +307,36 @@ const unfollowUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+const getFollowers = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId).populate("followers", "username email");
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        
+        res.status(200).json(user.followers);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const getFollowing = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId).populate("following", "username email");
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        
+        res.status(200).json(user.following);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
         
 const toggleFavorite = async (req, res) => {
     try {

@@ -1,14 +1,16 @@
 import "./NavigationBars.css";
 import { Link } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
 function NavigationBar({ screen_name }) {
+    const { user } = useAuth();
+    
     return (
         <div className="navigationBar">
-
             <div className="screenName">{screen_name}</div>
 
-            <Link to="/">
-                <img className="appIcon" alt="" src="App_Icon.png" />
+            <Link to={user ? "/ingredients" : "/"}>
+                <img className="appIcon" alt="" src="Hamster.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 
@@ -31,18 +33,15 @@ function NavigationBar({ screen_name }) {
             <Link to="/profile">
                 <img className="userIcon" alt="" src="User_Icon.svg" />
             </Link>
-
-
         </div>
     );
 }
-
 
 function MainPageNavigationBar() {
     return (
         <div className="navigationBar">
             <Link to="/">
-                <img className="appIcon" alt="" src="App_Icon.png" />
+                <img className="appIcon" alt="" src="Hamster.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 
@@ -53,14 +52,14 @@ function MainPageNavigationBar() {
     );
 }
 
-
 function OtherNavigationBar({ screen_name }) {
+    const { user } = useAuth();
+    
     return (
         <div className="navigationBar">
-
             <div className="screenName">{screen_name}</div>
-            <Link to="/">
-                <img className="appIcon" alt="" src="App_Icon.png" />
+            <Link to={user ? "/ingredients" : "/"}>
+                <img className="appIcon" alt="" src="Hamster.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 
@@ -70,6 +69,5 @@ function OtherNavigationBar({ screen_name }) {
         </div>
     );
 }
-
 
 export { NavigationBar, MainPageNavigationBar, OtherNavigationBar };

@@ -1,5 +1,6 @@
 const User = require('../models/user.model.js');
 const mongoose = require('mongoose');
+const Recipe = require('../models/recipe.model.js');
 
 // Helper function to validate MongoDB ObjectId
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
@@ -275,6 +276,7 @@ const updateProfilePicture = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 const followUser = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -304,6 +306,128 @@ const unfollowUser = async (req, res) => {
         res.status(200).json({ message: "User unfollowed successfully." });
     } catch (error) {
         res.status(500).json({ error: error.message });
+=======
+const toggleFavorite = async (req, res) => {
+    try {
+        const { recipeId } = req.params;
+        
+        if (!isValidObjectId(recipeId)) {
+            return res.status(400).json({message: "Invalid recipe ID format"});
+        }
+
+        // Check if recipe exists
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.status(404).json({message: "Recipe not found"});
+        }
+
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Check if recipe is already in favorites
+        const favoriteIndex = user.favoriteRecipes.indexOf(recipeId);
+        if (favoriteIndex === -1) {
+            // Add to favorites
+            user.favoriteRecipes.push(recipeId);
+        } else {
+            // Remove from favorites
+            user.favoriteRecipes.splice(favoriteIndex, 1);
+        }
+
+        await user.save();
+
+        // Return updated user with populated favorites and nested author information
+        const updatedUser = await User.findById(req.user._id)
+            .select('-password')
+            .populate({
+                path: 'recipes'
+            })
+            .populate({
+                path: 'favoriteRecipes',
+                populate: {
+                    path: 'author',
+                    select: 'username'
+                }
+            })
+            .populate({
+                path: 'cookedRecipes',
+                populate: {
+                    path: 'author',
+                    select: 'username'
+                }
+            })
+            .populate('followers', 'username')
+            .populate('following', 'username');
+
+        res.status(200).json({
+            user: updatedUser,
+            isFavorited: favoriteIndex === -1 // true if we just added it, false if we just removed it
+        });
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
+const toggleCooked = async (req, res) => {
+    try {
+        const { id, recipeId } = req.params;
+        
+        if (!isValidObjectId(recipeId)) {
+            return res.status(400).json({message: "Invalid recipe ID format"});
+        }
+
+        // Check if recipe exists
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.status(404).json({message: "Recipe not found"});
+        }
+
+        // Check if user is modifying their own cooked recipes
+        if (id !== req.user._id.toString()) {
+            return res.status(403).json({message: "Not authorized to modify this user's cooked recipes"});
+        }
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({message: "User not found"});
+        }
+
+        // Check if recipe is already in cooked recipes
+        const cookedIndex = user.cookedRecipes.indexOf(recipeId);
+        if (cookedIndex === -1) {
+            // Add to cooked recipes
+            user.cookedRecipes.push(recipeId);
+        } else {
+            // Remove from cooked recipes
+            user.cookedRecipes.splice(cookedIndex, 1);
+        }
+
+        await user.save();
+
+        // Return updated user with populated fields
+        const updatedUser = await User.findById(id)
+            .select('-password')
+            .populate('recipes')
+            .populate({
+                path: 'favoriteRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
+            .populate({
+                path: 'cookedRecipes',
+                populate: { path: 'author', select: 'username' }
+            })
+            .populate('followers', 'username')
+            .populate('following', 'username');
+
+        res.status(200).json({
+            user: updatedUser,
+            isCooked: cookedIndex === -1 // true if we just added it, false if we just removed it
+        });
+    } catch (error) {
+        res.status(500).json({message: error.message});
+>>>>>>> 3c9882faaeb3cae18bb146b00d0a949d4bd0aafe
     }
 };
 
@@ -317,5 +441,7 @@ module.exports = {
     updatePersonalIngredient,
     deletePersonalIngredient,
     getPersonalIngredients,
-    updateProfilePicture
+    updateProfilePicture,
+    toggleFavorite,
+    toggleCooked
 }; 

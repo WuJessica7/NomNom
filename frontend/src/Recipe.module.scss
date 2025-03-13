@@ -2,46 +2,355 @@
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 270px;
+    width: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease;
     position: relative;
-  
-    &:hover {
-      transform: translateY(-5px);
+    cursor: pointer;
+
+    // Only apply transitions to the hover state
+    &:not(.expanded) {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
     }
   
-    .image {
+    &.expanded {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      z-index: 1000;
+      cursor: default;
+      overflow-y: auto;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+      background: #fff;
+  
+      &:hover {
+        transform: translate(-50%, -50%);
+      }
+
+      .imageContainer {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+
+        .image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .imageContainer {
       width: 100%;
-      height: 180px;
-      object-fit: cover;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+
+      .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        gap: 8px;
+        z-index: 2;
+      }
     }
   
-    .favoriteButton {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+    .actionButton {
       background: none;
       border: none;
       font-size: 24px;
       cursor: pointer;
+      padding: 8px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+  
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   
     .cardBottom {
-      padding: 10px;
+      padding: 16px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 8px;
+      background-color: #f8f8f8;
+      border-radius: 0 0 8px 8px;
   
       .chefName {
+        font-size: 16px;
         font-weight: bold;
+        margin: 0;
+        color: #333;
       }
   
       .foodName {
         font-size: 14px;
-        color: gray;
+        color: #666;
+        margin: 0;
+      }
+  
+      .category {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+  
+      .ingredientCount {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+        font-style: italic;
+      }
+    }
+  
+    .expandedContent {
+      padding: 24px;
+      background-color: #fff;
+      border-top: 1px solid #eee;
+  
+      h5 {
+        font-size: 18px;
+        color: #333;
+        margin: 0 0 16px 0;
+        font-family: Outfit;
+      }
+  
+      .ingredients {
+        margin-bottom: 24px;
+  
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 12px;
+  
+          li {
+            font-size: 14px;
+            color: #666;
+            padding: 12px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+  
+            .measure {
+              font-weight: bold;
+              color: #333;
+              min-width: 60px;
+            }
+  
+            .ingredient {
+              flex: 1;
+            }
+          }
+        }
+  
+        .noIngredients {
+          color: #888;
+          font-style: italic;
+          text-align: center;
+          padding: 16px;
+          background-color: #f8f8f8;
+          border-radius: 4px;
+        }
+      }
+  
+      .instructions {
+        margin-bottom: 24px;
+  
+        p {
+          font-size: 14px;
+          color: #666;
+          line-height: 1.6;
+          white-space: pre-line;
+        }
+      }
+  
+      .youtube {
+        margin-bottom: 24px;
+  
+        a {
+          display: inline-block;
+          padding: 8px 16px;
+          background-color: #ff0000;
+          color: white;
+          text-decoration: none;
+          border-radius: 4px;
+          font-size: 14px;
+          transition: opacity 0.2s ease;
+  
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+      }
+  
+      .closeButton {
+        width: 100%;
+        padding: 12px;
+        background-color: #000;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        font-family: Outfit;
+        transition: opacity 0.2s ease;
+  
+        &:hover {
+          opacity: 0.9;
+        }
       }
     }
   }
+
+.editButton {
+  padding: 8px 16px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-top: 8px;
+  width: 100%;
+  font-family: Outfit;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.authorActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+
+  .editButton, .deleteButton {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    font-family: Outfit;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .editButton {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .deleteButton {
+    background-color: #dc3545;
+    color: #fff;
+  }
+}
+
+.deleteConfirm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 1000;
+  width: 90%;
+  max-width: 320px;
+
+  p {
+    margin: 0 0 16px;
+    font-size: 16px;
+    color: #333;
+    font-family: Outfit;
+  }
+
+  .deleteActions {
+    display: flex;
+    gap: 8px;
+
+    button {
+      flex: 1;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      font-family: Outfit;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .confirmButton {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .cancelButton {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+}
+
+// Add overlay for delete confirmation
+.deleteConfirm::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+// Add overlay when card is expanded
+.expanded::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}

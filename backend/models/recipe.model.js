@@ -1,9 +1,21 @@
 const mongoose = require('mongoose');
 
+const ingredientSchema = new mongoose.Schema({
+    ingredient: {
+        type: String,
+        required: true
+    },
+    measure: {
+        type: String
+    }
+});
+
 const recipeSchema = new mongoose.Schema({
     idMeal: {
         type: String,
-        unique: true
+        unique: true,
+        sparse: true,  // This allows multiple documents to have no idMeal
+        default: () => `custom_${new Date().getTime()}`  // Generate a unique ID if none provided
     },
 
     strMeal: {
@@ -35,7 +47,9 @@ const recipeSchema = new mongoose.Schema({
 
     strYoutube: String,
 
-    // Ingredients and measures (up to 20 as per TheMealDB)
+    ingredients: [ingredientSchema],  // Add ingredients array
+
+    // Legacy fields for compatibility
     strIngredient1: String,
     strIngredient2: String,
     strIngredient3: String,

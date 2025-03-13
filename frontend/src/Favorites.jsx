@@ -1,38 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import Favorite from "./Favorite";
+import Recipe from "./Recipe";
 import styles from "./Favorites.module.scss";
-
-const initialFavoriteItems = [
-    { id: 1, chef: "Chef A", food: "Food A", image: "Food_Image.png" },
-    { id: 2, chef: "Chef B", food: "Food B", image: "Food_Image.png" },
-    { id: 3, chef: "Chef C", food: "Food C", image: "Food_Image.png" },
-    { id: 4, chef: "Chef D", food: "Food D", image: "Food_Image.png" },
-    { id: 5, chef: "Chef E", food: "Food E", image: "Food_Image.png" },
-    { id: 6, chef: "Chef F", food: "Food F", image: "Food_Image.png" },
-];
+import { useAuth } from './context/AuthContext';
 
 const Favorites = () => {
     const [search, setSearch] = useState("");
-    const [favoritesList, setFavoritesList] = useState(initialFavoriteItems);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const { user } = useAuth();
 
-    const filteredItems = favoritesList.filter(
-        (item) =>
-            item.food.toLowerCase().includes(search.toLowerCase()) ||
-            item.chef.toLowerCase().includes(search.toLowerCase())
-    );
+    // Set loading to false once user data is available
+    useEffect(() => {
+        if (user !== null) {
+            setLoading(false);
+        }
+    }, [user]);
 
-    const removeFavoriteItem = (id) => {
-        setFavoritesList((prev) => prev.filter((item) => item.id !== id));
+    // Filter favorites based on search
+    const filteredFavorites = user?.favoriteRecipes?.filter(
+        (recipe) =>
+            recipe.strMeal?.toLowerCase().includes(search.toLowerCase()) ||
+            recipe.strCategory?.toLowerCase().includes(search.toLowerCase()) ||
+            recipe.author?.username?.toLowerCase().includes(search.toLowerCase())
+    ) || [];
+
+    const handleDelete = (deletedId) => {
+        // No need to implement delete here as it's handled by the Recipe component
+        // The favorites list will update automatically through AuthContext
     };
+
+    if (!user) {
+        return <div className={styles.message}>Please log in to view your favorites.</div>;
+    }
 
     return (
         <div className={styles.favorites}>
             <SearchBar search={search} setSearch={setSearch} />
+            {loading && <div className={styles.loading}>Loading...</div>}
+            {error && <div className={styles.error}>{error}</div>}
             <div className={styles.favorites__grid}>
-                {filteredItems.map((item) => (
-                    <Favorite key={item.id} item={item} removeFavoriteItem={removeFavoriteItem} />
-                ))}
+                {filteredFavorites.length > 0 ? (
+                    filteredFavorites.map((recipe) => (
+                        <Recipe 
+                            key={recipe._id} 
+                            item={recipe}
+                            onDelete={handleDelete}
+                        />
+                    ))
+                ) : (
+                    <div className={styles.message}>
+                        {search ? "No favorites match your search." : "You haven't favorited any recipes yet."}
+                    </div>
+                )}
             </div>
         </div>
     );

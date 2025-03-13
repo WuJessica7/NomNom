@@ -1,10 +1,26 @@
 import "./SignInAndCreateAccPage.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from './context/AuthContext';
 
 function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    
+    const result = await login(email, password);
+    if (result.success) {
+      navigate('/ingredients');
+    } else {
+      setError(result.message || 'Login failed');
+    }
+  };
 
   return (
     <div className="signin">
@@ -13,7 +29,7 @@ function SignInPage() {
         <div className="signintext">Sign In</div>
         <img className="appicon" alt="" src="App_Icon.svg" />
 
-        <div className="fields">
+        <form onSubmit={handleSubmit} className="fields">
           <div className="email-field">
             <label htmlFor="email" className="label">Email: </label>
             <input
@@ -22,6 +38,7 @@ function SignInPage() {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -33,18 +50,19 @@ function SignInPage() {
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
-          <Link to="/ingredients">
-            <div className="continue-button">
-              <div className="continue">Continue</div>
-            </div>
-          </Link>
-        </div>
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" className="continue-button">
+            <div className="continue">Continue</div>
+          </button>
+        </form>
 
         <div className="footer">
-          <div className="no-acc-text">Don’t have an account?</div>
+          <div className="no-acc-text">Don't have an account?</div>
           <Link to="/create-account">
             <div className="sign-up-button">Sign up</div>
           </Link>

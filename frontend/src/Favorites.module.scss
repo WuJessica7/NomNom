@@ -8,6 +8,7 @@
   max-width: 1200px;
   box-sizing: border-box;
   background-color: #F9F5F6;
+  min-height: calc(100vh - 60px); // Account for navbar height
 
   h1 {
     font-size: 2.5rem;
@@ -17,11 +18,41 @@
   }
 
   &__grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;     
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Explicitly 3 columns
+    gap: 24px;
+    padding: 24px;
+    margin: 0 auto;
+    max-width: 1200px;
     width: 100%;
-    padding: 40px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr); // 2 columns on medium screens
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr; // 1 column on mobile
+    }
+  }
+
+  .loading, .error, .message {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    width: 100%;
+  }
+
+  .loading {
+    color: #666;
+  }
+
+  .error {
+    color: #dc3545;
+  }
+
+  .message {
+    color: #666;
+    font-style: italic;
+    grid-column: 1 / -1; // Span all columns when showing message
   }
 }

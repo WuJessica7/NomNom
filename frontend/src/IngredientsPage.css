@@ -2,7 +2,7 @@
     width: 100%;
     position: relative;
     background-color: #f9f5f6;
-    height: 1024px;
+    min-height: 100vh;
     text-align: left;
     font-size: 20px;
     color: #000;
@@ -10,30 +10,33 @@
 }
 
 .ingredients-list {
-    position: absolute;
-    top: 150px;
-    left: 322px;
+    position: relative;
+    top: 110px;
+    left: 321px;
     width: 705px;
-    height: 788px;
+    max-height: 788px;
     font-size: 20px;
     color: #000;
     font-family: Outfit;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .ingredient-group {
-    position: absolute;
-    left: 0px;
-    width: 705px;
+    position: relative;
+    width: 100%;
     height: 81px;
+    margin-bottom: 20px;
 }
 
 .ingredient-rectangle {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     border-radius: 10px;
     background-color: #d9d9d9;
-    width: 705px;
+    width: 100%;
     height: 81px;
 }
 
@@ -136,4 +139,24 @@
     left: 685px;
     line-height: 140%;
     cursor: pointer;
+}
+
+.no-ingredients {
+    text-align: left;
+    color: #666;
+    font-style: italic;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-family: Outfit;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 12px 0;
+    text-align: center;
+    font-family: Outfit;
 }

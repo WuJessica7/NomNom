@@ -14,6 +14,7 @@ const productRoute = require("./routes/product.route.js");
 const userRoutes = require('./routes/user.route.js');
 const recipeRoutes = require('./routes/recipe.route.js');
 const authRoutes = require('./routes/auth.route.js');
+const ingredientRoutes = require('./routes/ingredient.route.js');
 
 const app = express();
 
@@ -63,6 +64,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use("/api/products", productRoute);
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/ingredients", ingredientRoutes);
 
 app.get('/', (req, res) => {
     res.send("Hello from Node API Updated 2");

@@ -458,7 +458,6 @@ const toggleCooked = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({message: error.message});
->>>>>>> 3c9882faaeb3cae18bb146b00d0a949d4bd0aafe
     }
 };
 

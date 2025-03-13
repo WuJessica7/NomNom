@@ -70,8 +70,6 @@ Now setup your frontend.
 cd ..
 cd frontend
 npm install
-npm install react-icons
-npm install sass
 ```
 #### Running
 ```

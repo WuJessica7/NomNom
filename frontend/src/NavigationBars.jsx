@@ -10,7 +10,7 @@ function NavigationBar({ screen_name }) {
             <div className="screenName">{screen_name}</div>
 
             <Link to={user ? "/ingredients" : "/"}>
-                <img className="appIcon" alt="" src="Image.png" />
+                <img className="appIcon" alt="" src="Hamster2.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 
@@ -41,7 +41,7 @@ function MainPageNavigationBar() {
     return (
         <div className="navigationBar">
             <Link to="/">
-                <img className="appIcon" alt="" src="Image.png" />
+                <img className="appIcon" alt="" src="Hamster2.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 
@@ -59,7 +59,7 @@ function OtherNavigationBar({ screen_name }) {
         <div className="navigationBar">
             <div className="screenName">{screen_name}</div>
             <Link to={user ? "/ingredients" : "/"}>
-                <img className="appIcon" alt="" src="Image.png" />
+                <img className="appIcon" alt="" src="Hamster2.png" />
                 <div className="appName">Nom Nom</div>
             </Link>
 

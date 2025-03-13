@@ -11,7 +11,7 @@ function Hero() {
                 <div className="rectangle1" />
                 <div className="create-acc-text">Create Account</div>
             </Link>
-            <img className="appIcon1" alt="" src="Image.png" />
+            <img className="appIcon1" alt="" src="Hamster2.png" />
         </div>
     );
 }
@@ -21,7 +21,7 @@ function Section2 () {
         <div className="section-2">
             <div className="header2">Upload Ingredients and Track Expiration Dates</div>
             <p className="description2">Stay organized and reduce waste! Upload your ingredients, and we’ll track expiration dates, send reminders, and suggest recipes — so you never waste food or eat expired items.</p>
-            <img className="appIcon2" alt="" src="Image.png" />
+            <img className="appIcon2" alt="" src="Hamster2.png" />
         </div>
     );
 }
@@ -31,7 +31,7 @@ function Section3 (){
         <div className="section-3">
             <div className="header3">Discover Recipes With Uploaded Ingredients</div>
             <p className="description3">Turn your ingredients into delicious meals! Upload what you have, and we’ll suggest recipes tailored to your pantry—no extra trips to the store needed.</p>
-            <img className="appIcon3" alt="" src="Image.png" />
+            <img className="appIcon3" alt="" src="Hamster2.png" />
         </div>
     );
 }
@@ -41,7 +41,7 @@ function Section4 () {
         <div className="section-4">
             <div className="header4">Share meals and connect with friends!</div>
             <p className="description4">Post your dishes, see what your friends are cooking, and interact with their meals through comments and reactions.</p>
-            <img className="appIcon4" alt="" src="Image.png" />
+            <img className="appIcon4" alt="" src="Hamster2.png" />
         </div>
     );
 }

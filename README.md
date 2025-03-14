@@ -75,10 +75,9 @@ npm run dev
 ### Frontend
 #### Setup (Frontend)
 
-Now setup your frontend.
+Now setup your frontend by going to a new terminal.
 
 ```
-cd ..
 cd frontend
 npm install
 ```
